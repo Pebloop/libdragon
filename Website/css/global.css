@@ -1,6 +1,29 @@
 html
 {
-    background-color: black;
+    background-color: #000033;
     color: white;
     text-align: center;
+    margin-top: 50vh;
+    transform: translateY(-100%);
+    overflow: hidden;
+}
+
+div
+{
+    font-size: 1.5vw;
+    animation-duration: 2s;
+    animation-name: slideup;
+}
+
+@keyframes slideup
+{
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
 }
