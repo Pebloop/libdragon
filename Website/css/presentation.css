@@ -1,0 +1,48 @@
+html
+{
+    background-color: #000033;
+    color: white;
+    text-align: center;
+    margin-top: 50vh;
+    transform: translateY(-60%);
+    overflow: hidden;
+	font-family: Verdana;
+}
+
+div
+{
+    font-size: 1.5vw;
+    animation-duration: 2s;
+    animation-name: slideup;
+}
+
+a
+{
+	border: solid 0.3em;
+	border-radius: 5em;
+	font-size: 3vw;
+	color: white;
+	margin: 1em;
+	padding: 0.5em 1em;
+	text-decoration: none;
+}
+
+a:hover
+{
+	border: solid white 0.3em;
+	background: white;
+	color: #000033;
+}
+
+@keyframes slideup
+{
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}

@@ -2,28 +2,31 @@ html
 {
     background-color: #000033;
     color: white;
-    text-align: center;
-    margin-top: 50vh;
-    transform: translateY(-100%);
-    overflow: hidden;
+	font-family: Verdana;
 }
 
 div
 {
-    font-size: 1.5vw;
-    animation-duration: 2s;
-    animation-name: slideup;
+    font-size: 1vw;
 }
 
-@keyframes slideup
+img
 {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
+	margin-right: 1em;
+}
 
-    to {
-        transform: translateY(0%);
-        opacity: 1;
-    }
+a
+{
+		color: white;
+		text-decoration: none;
+}
+
+header
+{
+	border-bottom: 1px solid white;
+}
+
+.float
+{
+	float:left;
 }
