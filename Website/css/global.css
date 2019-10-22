@@ -12,7 +12,7 @@ div
 
 img
 {
-	margin-right: 1em;
+	margin-right: 0.5em;
 }
 
 a
@@ -24,6 +24,20 @@ a
 header
 {
 	border-bottom: 1px solid white;
+}
+
+.logo
+{
+	font-size: 2.5vw;
+	font-weight: bold;
+}
+
+.menu
+{
+	font-size: 2.5vw;
+	padding-left: 1.6em;
+	margin-left: 1.3em;
+	border-left: solid;
 }
 
 .float
