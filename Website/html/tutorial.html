@@ -22,6 +22,7 @@
   <section>
     <h1>Tutorial</h1>
     <p>Before reading the tutorial, check the <a href="download.html">Download</a>, <a href="install.html">Install</a> and <a href="compile.html">Compile</a> pages.</p>
+    <div class="part">
     <h2>main function</h2>
     <p>To use the libdragon, you'll need to create the dg_init and dg_loop functions.<br />
     Use the dg_play function to create a new window.</p>
@@ -43,6 +44,8 @@
       <li>    dg_play(1920, 1024, "window");</li>
       <li>}</li>
     </ol>
+  </div>
+  <div class="part">
     <h2>the grid framebuffer</h2>
     <p>The grid framebuffer has the window size and can be modified without the loop reseting it.<br />
     Go to the framebuffer_t page to know how to use them.</p>
@@ -55,10 +58,13 @@
       <li>    return 0;</li>
       <li>}</li>
     </ol>
+  </div>
+  <div class="part">
     <h2><a href="https://www.sfml-dev.org">CSFML</a></h2>
     <p>libdragon is an overlay of <a href="https://www.sfml-dev.org">CSFML</a> and every functions of <a href="https://www.sfml-dev.org">CSFML</a> can be used with libdragon.<br />
       Moreover you don't need to include <a href="https://www.sfml-dev.org">CSFML</a> in your c file, libdragon.h already do it, but you need to compile with <a href="https://www.sfml-dev.org">CSFML</a>.<br />
       Go to the <a href="compile.html">compile page</a> to get more information.</p>
+    </div>
   </section>
   </body>
 </html>

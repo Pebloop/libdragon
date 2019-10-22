@@ -6,7 +6,7 @@ html
     margin-top: 50vh;
     transform: translateY(-60%);
     overflow: hidden;
-	font-family: Verdana;
+	font-family: Verdana, sans-serif;
 }
 
 div

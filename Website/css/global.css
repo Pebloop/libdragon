@@ -2,12 +2,7 @@ html
 {
     background-color: #000033;
     color: white;
-	font-family: Verdana;
-}
-
-div
-{
-    font-size: 1vw;
+	font-family: Verdana, sans-serif;
 }
 
 h1
@@ -35,7 +30,7 @@ header
 
 section
 {
-	border: solid;
+
 	border-width: 1px;
 	width: 93%;
 	min-height: 5em;
@@ -46,7 +41,6 @@ section
 	padding-top: 0%;
 	padding-bottom: 0%;
 	border-radius: 0.8em;
-	background: #000040;
 
 }
 
@@ -67,8 +61,6 @@ section
 
 .block
 {
-	border: solid;
-	border-width: 1px;
 	width: 90%;
 	min-height: 1em;
 	margin-top: 2%;
@@ -79,6 +71,19 @@ section
 	border-radius: 0.2em;
 	background: #7070A0;
 
+}
+
+.part
+{
+	border-left: solid;
+	border-width: 1px;
+	border-color: #000033;
+	padding-left: 10px;
+}
+
+.part:hover
+{
+	border-color: #7070A0;
 }
 
 .float
