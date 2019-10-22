@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+  </head>
+
+  <body>
+	 <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+	 </header>
+    <section>
+      <h1>framebuffer_update</h1>
+      <p>This function is used to update the framebuffer (to display it). If not used, the changes will not appear on the window.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <ol class="block">
+          <li>void framebuffer_update(framebuffer_t *fb, sfRenderWindow *window);</li>
+        </ol>
+        <ul>
+          <li>fb : framebuffer to update</li>
+          <li>window : the window where the fb will be displayed</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Exemple</h2>
+        <ol class="block">
+          <li>framebuffer_update(fb, window);</li>
+        </ol>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <ol class="block">
+          <li>void framebuffer_update(framebuffer_t *fb, sfRenderWindow *window)</li>
+          <li>{</li>
+          <li>    sfTexture_updateFromPixels((sfTexture *) sfSprite_getTexture(fb->sp),</li>
+          <li>                                                   fb->pixels, fb->width, fb->height, 0, 0);</li>
+          <li>    sfRenderWindow_drawSprite(window, fb->sp, NULL);</li>
+          <li>}</li>
+        </ol>
+      </div>
+    </section>
+  </body>
+</html>

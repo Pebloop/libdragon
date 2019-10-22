@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+  </head>
+
+  <body>
+	 <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+	 </header>
+    <section>
+      <h1>framebuffer_create</h1>
+      <p>This function is used to initialize the framebuffer.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <ol class="block">
+          <li>framebuffer_t *framebuffer_create(unsigned int width, unsigned int height);</li>
+        </ol>
+        <ul>
+          <li>width : width of the grid</li>
+          <li>height : height of the grid</li>
+          <li>return : the initialized framebuffer</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Exemple</h2>
+        <ol class="block">
+          <li>framebuffer_t *fb = framebuffer_create(200, 300);</li>
+        </ol>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <ol class="block">
+          <li>framebuffer_t *framebuffer_create(unsigned int width, unsigned int height)</li>
+          <li>{</li>
+          <li>    framebuffer_t *fb = malloc(sizeof(framebuffer_t));</li>
+          <li>    sfTexture *tex = sfTexture_create(width, height);</li>
+          <li>    sfSprite *sp = sfSprite_create();</li>
+          <li></li>
+          <li>    sfSprite_setTexture(sp, tex, sfFalse);</li>
+          <li>    fb->pixels = malloc(sizeof(sfUint8) * width * height * 4);</li>
+          <li>    fb->width = width;</li>
+          <li>    fb->height = height;</li>
+          <li>    fb->sp = sp;</li>
+          <li>    return fb;</li>
+          <li>}</li>
+        </ol>
+      </div>
+    </section>
+  </body>
+</html>

@@ -23,10 +23,10 @@ int put_pixel_in_fb(framebuffer_t *fb, unsigned int x,
 }
 
 //change a pixel
-void draw_square(framebuffer_t *framebuffer, sfVector2u position,
+void draw_square(framebuffer_t *fb, sfVector2u position,
                  unsigned int size, sfColor color)
 {
     for (int i = position.x; i < position.x + size; i++)
         for (int j = position.y; j < position.y + size; j++)
-            put_pixel_in_fb(framebuffer, i, j, color);
+            put_pixel_in_fb(fb, i, j, color);
 }

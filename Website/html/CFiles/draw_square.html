@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+  </head>
+
+  <body>
+	 <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+	 </header>
+    <section>
+      <h1>draw_square</h1>
+      <p>This function draw a square in a framebuffer.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <ol class="block">
+          <li>void draw_square(framebuffer_t *fb, sfVector2u position, unsigned int size, sfColor color);</li>
+        </ol>
+        <ul>
+          <li>fb : framebuffer to draw in</li>
+          <li>position : position of the square (top left)</li>
+          <li>size : size of the square</li>
+          <li>color : color of the square</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Exemple</h2>
+        <ol class="block">
+          <li>draw_square(fb, pos, 20, sfBlue);</li>
+        </ol>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <ol class="block">
+          <li>void draw_square(framebuffer_t *fb, sfVector2u position, unsigned int size, sfColor color);</li>
+          <li>{</li>
+          <li>    for (int i = position.x; i < position.x + size; i++)</li>
+          <li>        for (int j = position.y; j < position.y + size; j++)</li>
+          <li>            put_pixel_in_fb(fb, i, j, color);</li>
+          <li>}</li>
+        </ol>
+      </div>
+    </section>
+  </body>
+</html>

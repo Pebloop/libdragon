@@ -22,8 +22,8 @@ $(NAME):	$(SRC)
 	cp $(NAME) ../
 
 clean:
-	rm -f $(OBJ)
-	rm -f $(NAME)
+	-rm -f $(OBJ)
+	-rm -f $(NAME)
 
 fclean: clean
-	rm -f ../$(NAME)
+	-rm -f ../$(NAME)

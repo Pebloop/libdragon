@@ -12,7 +12,7 @@ int dg_init(framebuffer_t *);
 
 int dg_loop(framebuffer_t *);
 
-int dg_play(unsigned int width, unsigned int height, char *name)
+void dg_play(unsigned int width, unsigned int height, char *name)
 {
     sfVideoMode mode = {width, height, 32};
     sfRenderWindow *window = sfRenderWindow_create(mode, name,
