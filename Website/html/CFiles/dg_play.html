@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
   </head>
 
   <body>
@@ -25,9 +27,7 @@
       This function require the functions dg_init and dg_loop, otherwise, you won't be able to compile</p>
       <div class="part">
         <h2>Usage</h2>
-        <ol class="block">
-          <li>void dg_play(unsigned int width, unsigned int height, char *name)</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">void dg_play(unsigned int width, unsigned int height, char *name)</code></pre>
         <ul>
           <li>width : width of the window, in pixels</li>
           <li>height : height of the window, in pixels</li>
@@ -36,38 +36,34 @@
       </div>
       <div class="part">
         <h2>Exemple</h2>
-        <ol class="block">
-          <li>dg_play(1920, 1980, "window");</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">dg_play(1920, 1980, "window");</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <ol class="block">
-          <li>void dg_play(unsigned int width, unsigned int height, char *name)</li>
-          <li>{</li>
-          <li>    sfVideoMode mode = {width, height, 32};</li>
-          <li>    sfRenderWindow *window = sfRenderWindow_create(mode, name,</li>
-          <li>                                                        sfResize | sfClose, NULL);</li>
-          <li>    framebuffer_t *back_fb = framebuffer_create(mode.width, mode.height);</li>
-          <li>    int (*init)(framebuffer_t *) = &dg_init;</li>
-          <li>    int (*loop)(framebuffer_t *) = &dg_loop;</li>
-          <li>    sfEvent event;</li>
-          <li></li>
-          <li>    (*init)(back_fb);</li>
-          <li>    sfRenderWindow_clear(window, sfBlack);</li>
-          <li>    while (sfRenderWindow_isOpen(window)) {</li>
-          <li>        while (sfRenderWindow_pollEvent(window, &event)) {</li>
-          <li>            if (event.type == sfEvtClosed)</li>
-          <li>                sfRenderWindow_close(window);</li>
-          <li>        }</li>
-          <li>        (*loop)(back_fb);</li>
-          <li>        framebuffer_update(back_fb, window);</li>
-          <li>        sfRenderWindow_display(window);</li>
-          <li>    }</li>
-          <li>    framebuffer_destroy(back_fb);</li>
-          <li>    sfRenderWindow_destroy(window);</li>
-          <li>}</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">void dg_play(unsigned int width, unsigned int height, char *name)
+{
+    sfVideoMode mode = {width, height, 32};
+    sfRenderWindow *window = sfRenderWindow_create(mode, name,
+                                                   sfResize | sfClose, NULL);
+    framebuffer_t *back_fb = framebuffer_create(mode.width, mode.height);
+    int (*init)(framebuffer_t *) = &dg_init;
+    int (*loop)(framebuffer_t *) = &dg_loop;
+    sfEvent event;
+
+    (*init)(back_fb);
+    sfRenderWindow_clear(window, sfBlack);
+    while (sfRenderWindow_isOpen(window)) {
+        while (sfRenderWindow_pollEvent(window, &event)) {
+            if (event.type == sfEvtClosed)
+                sfRenderWindow_close(window);
+        }
+        (*loop)(back_fb);
+        framebuffer_update(back_fb, window);
+        sfRenderWindow_display(window);
+    }
+    framebuffer_destroy(back_fb);
+    sfRenderWindow_destroy(window);
+}</code></pre>
       </div>
     </section>
   </body>

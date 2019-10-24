@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
   </head>
 
   <body>
@@ -24,9 +26,7 @@
       <p>This function is used to free the framebuffer in the memory.</p>
       <div class="part">
         <h2>Usage</h2>
-        <ol class="block">
-          <li>int framebuffer_destroy(framebuffer_t *fb)</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">int framebuffer_destroy(framebuffer_t *fb)</code></pre>
         <ul>
           <li>fb : framebuffer to free</li>
           <li>return : 0</li>
@@ -34,23 +34,19 @@
       </div>
       <div class="part">
         <h2>Exemple</h2>
-        <ol class="block">
-          <li>framebuffer_destroy(fb);</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">framebuffer_destroy(fb);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <ol class="block">
-          <li>int framebuffer_destroy(framebuffer_t *fb)</li>
-          <li>{</li>
-          <li>    free(fb->pixels);</li>
-          <li>    sfTexture_destroy((sfTexture *) sfSprite_getTexture(fb->sp));</li>
-          <li>    sfSprite_destroy(fb->sp);</li>
-          <li></li>
-          <li>    free(fb);</li>
-          <li>    return 0;</li>
-          <li>}</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">int framebuffer_destroy(framebuffer_t *fb)
+{
+    free(fb->pixels);
+    sfTexture_destroy((sfTexture *) sfSprite_getTexture(fb->sp));
+    sfSprite_destroy(fb->sp);
+
+    free(fb);
+    return 0;
+}</code></pre>
       </div>
     </section>
   </body>

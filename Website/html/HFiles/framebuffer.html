@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
   </head>
 
   <body>
@@ -24,15 +26,13 @@
       <p>Grid of pixels.</p>
       <div class="part">
         <h2>H File</h2>
-        <ol class="block">
-          <li>typedef struct framebuffer</li>
-          <li>{</li>
-          <li>    sfUint8 *pixels;</li>
-          <li>    int width;</li>
-          <li>    int height;</li>
-          <li>    sfSprite *sp;</li>
-          <li>} framebuffer_t;</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">typedef struct framebuffer
+{
+    sfUint8 *pixels;
+    int width;
+    int height;
+    sfSprite *sp;
+} framebuffer_t;</code></pre>
       </div>
     </section>
   </body>

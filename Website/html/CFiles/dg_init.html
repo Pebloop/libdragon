@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
   </head>
 
   <body>
@@ -25,9 +27,7 @@
       This fonction is called before the loop wich display the window content.</p>
       <div class="part">
         <h2>Usage</h2>
-        <ol class="block">
-          <li>int dg_init(framebuffer_t *grid);</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">int dg_init(framebuffer_t *grid);</code></pre>
         <ul>
           <li>grid : the background grid</li>
           <li>return : an int of your choice</li>

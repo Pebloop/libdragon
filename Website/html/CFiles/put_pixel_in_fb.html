@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
   </head>
 
   <body>
@@ -24,9 +26,7 @@
       <p>This function modify a pixel of a framebuffer.</p>
       <div class="part">
         <h2>Usage</h2>
-        <ol class="block">
-          <li>int put_pixel_in_fb(framebuffer_t *fb, unsigned int x, unsigned int y, sfColor color);</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">int put_pixel_in_fb(framebuffer_t *fb, unsigned int x, unsigned int y, sfColor color);</code></pre>
         <ul>
           <li>fb : framebuffer to modify</li>
           <li>x : x coordinate of the pixel</li>
@@ -37,25 +37,21 @@
       </div>
       <div class="part">
         <h2>Exemple</h2>
-        <ol class="block">
-          <li>put_pixel_in_fb(fb, 500, 50, sfRed);</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">put_pixel_in_fb(fb, 500, 50, sfRed);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <ol class="block">
-          <li>int put_pixel_in_fb(framebuffer_t *fb, unsigned int x, unsigned int y, sfColor color)</li>
-          <li>{</li>
-          <li>    if (x > fb->width || y > fb->height)</li>
-          <li>        return 1;</li>
-          <li>    int pos = (x + y * fb->width) * 4;</li>
-          <li>    fb->pixels[pos] = color.r;</li>
-          <li>    fb->pixels[pos + 1] = color.g;</li>
-          <li>    fb->pixels[pos + 2] = color.b;</li>
-          <li>    fb->pixels[pos + 3] = color.a;</li>
-          <li>    return 0;</li>
-          <li>}</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">int put_pixel_in_fb(framebuffer_t *fb, unsigned int x, unsigned int y, sfColor color)
+{
+    if (x > fb->width || y > fb->height)
+        return 1;
+    int pos = (x + y * fb->width) * 4;
+    fb->pixels[pos] = color.r;
+    fb->pixels[pos + 1] = color.g;
+    fb->pixels[pos + 2] = color.b;
+    fb->pixels[pos + 3] = color.a;
+    return 0;s
+}</code></pre>
       </div>
     </section>
   </body>

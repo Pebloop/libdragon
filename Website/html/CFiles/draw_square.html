@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
   </head>
 
   <body>
@@ -24,9 +26,7 @@
       <p>This function draw a square in a framebuffer.</p>
       <div class="part">
         <h2>Usage</h2>
-        <ol class="block">
-          <li>void draw_square(framebuffer_t *fb, sfVector2u position, unsigned int size, sfColor color);</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">void draw_square(framebuffer_t *fb, sfVector2u position, unsigned int size, sfColor color);</code></pre>
         <ul>
           <li>fb : framebuffer to draw in</li>
           <li>position : position of the square (top left)</li>
@@ -36,20 +36,16 @@
       </div>
       <div class="part">
         <h2>Exemple</h2>
-        <ol class="block">
-          <li>draw_square(fb, pos, 20, sfBlue);</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">draw_square(fb, pos, 20, sfBlue);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <ol class="block">
-          <li>void draw_square(framebuffer_t *fb, sfVector2u position, unsigned int size, sfColor color);</li>
-          <li>{</li>
-          <li>    for (int i = position.x; i < position.x + size; i++)</li>
-          <li>        for (int j = position.y; j < position.y + size; j++)</li>
-          <li>            put_pixel_in_fb(fb, i, j, color);</li>
-          <li>}</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">void draw_square(framebuffer_t *fb, sfVector2u position, unsigned int size, sfColor color)
+{
+    for (int i = position.x; i < position.x + size; i++)
+        for (int j = position.y; j < position.y + size; j++)
+            put_pixel_in_fb(fb, i, j, color);
+}</code></pre>
       </div>
     </section>
   </body>

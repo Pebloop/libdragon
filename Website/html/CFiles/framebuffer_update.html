@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
   </head>
 
   <body>
@@ -24,9 +26,7 @@
       <p>This function is used to update the framebuffer (to display it). If not used, the changes will not appear on the window.</p>
       <div class="part">
         <h2>Usage</h2>
-        <ol class="block">
-          <li>void framebuffer_update(framebuffer_t *fb, sfRenderWindow *window);</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">void framebuffer_update(framebuffer_t *fb, sfRenderWindow *window);</code></pre>
         <ul>
           <li>fb : framebuffer to update</li>
           <li>window : the window where the fb will be displayed</li>
@@ -34,20 +34,19 @@
       </div>
       <div class="part">
         <h2>Exemple</h2>
-        <ol class="block">
-          <li>framebuffer_update(fb, window);</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">framebuffer_update(fb, window);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <ol class="block">
-          <li>void framebuffer_update(framebuffer_t *fb, sfRenderWindow *window)</li>
-          <li>{</li>
-          <li>    sfTexture_updateFromPixels((sfTexture *) sfSprite_getTexture(fb->sp),</li>
-          <li>                                                   fb->pixels, fb->width, fb->height, 0, 0);</li>
-          <li>    sfRenderWindow_drawSprite(window, fb->sp, NULL);</li>
-          <li>}</li>
-        </ol>
+        <pre><code class="lang-c line-numbers">void framebuffer_update(framebuffer_t *fb, sfRenderWindow *window)
+{
+    sfTexture_updateFromPixels((sfTexture *) sfSprite_getTexture(fb->sp),
+                                                                 fb->pixels,
+                                                                 fb->width,
+                                                                 fb->height,
+                                                                 0, 0);
+    sfRenderWindow_drawSprite(window, fb->sp, NULL);
+}</code></pre>       
       </div>
     </section>
   </body>

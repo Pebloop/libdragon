@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../css/global.css" />
+    <link href="../themes/prism.css" rel="stylesheet" />
+    <script src="../themes/prism.js"></script>
   </head>
 
   <body>
@@ -26,38 +28,36 @@
     <h2>main function</h2>
     <p>To use the libdragon, you'll need to create the dg_init and dg_loop functions.<br />
     Use the dg_play function to create a new window.</p>
-    <ol class="block">
-      <li>#include "libdragon.h"</li>
-      <li></li>
-      <li>int dg_init(framebuffer_t *grid)</li>
-      <li>{</li>
-      <li>    return 0;</li>
-      <li>}</li>
-      <li></li>
-      <li>int dg_loop(framebuffer_t *grid)</li>
-      <li>{</li>
-      <li>    return 0;</li>
-      <li>}</li>
-      <li></li>
-      <li>int main(void)</li>
-      <li>{</li>
-      <li>    dg_play(1920, 1024, "window");</li>
-      <li>}</li>
-    </ol>
+
+<pre><code class="lang-c line-numbers">#include "libdragon.h"
+      	
+int dg_init(framebuffer_t *grid)
+{
+    return 0;
+}
+
+int dg_loop(framebuffer_t *grid)
+{
+    return 0;
+}
+
+int main(void)
+{
+    dg_play(1920, 1024, "window");
+}</code></pre>
   </div>
   <div class="part">
     <h2>the grid framebuffer</h2>
     <p>The grid framebuffer has the window size and can be modified without the loop reseting it.<br />
     Go to the framebuffer_t page to know how to use them.</p>
-    <ol class="block">
-      <li>int dg_loop(framebuffer_t *grid)</li>
-      <li>{</li>
-      <li>    sfVector2u vector = {20, 20};</li>
-      <li></li>
-      <li>    draw_square(grid, vector, 200, sfBlue);</li>
-      <li>    return 0;</li>
-      <li>}</li>
-    </ol>
+    <pre><code class="lang-c line-numbers">int dg_loop(framebuffer_t *grid)
+{
+    sfVector2u vector = {20, 20};
+      
+    draw_square(grid, vector, 200, sfBlue);
+    return 0;
+}
+</code></pre>
   </div>
   <div class="part">
     <h2><a href="https://www.sfml-dev.org">CSFML</a></h2>
