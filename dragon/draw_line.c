@@ -15,10 +15,9 @@ static int abs(int number)
     return number;
 }
 
-static int check_spe(framebuffer_t *fb, sfVector2u *position, sfColor color)
+static int check_spe(framebuffer_t *fb, sfVector2u p1,
+                     sfVector2u p2, sfColor color)
 {
-    sfVector2u p1 =  position[0];
-    sfVector2u p2 =  position[1];
     unsigned int nb = abs(p1.x - p2.x) + abs(p1.y - p2.y);
 
     if (fb->thickness == 0)
@@ -35,16 +34,15 @@ static int check_spe(framebuffer_t *fb, sfVector2u *position, sfColor color)
     return 0;
 }
 
-int draw_line(framebuffer_t *fb, sfVector2u *position, sfColor color)
+int draw_line(framebuffer_t *fb, sfVector2u p1,
+              sfVector2u p2, sfColor color)
 {
-    sfVector2u p1 = position[0];
-    sfVector2u p2 = position[1];
     sfVector2u actual = {0, 0};
     unsigned int nb = abs(p1.x - p2.x) + abs(p1.y - p2.y);
     float dx = 0.0;
     float dy = 0.0;
 
-    if (check_spe(fb, position, color))
+    if (check_spe(fb, p1, p2, color))
         return 0;
     for (int i = 0; i <= nb; i++) {
         dx = ((float)(p2.x) - (float)(p1.x)) / (nb - 1.0) * i;
