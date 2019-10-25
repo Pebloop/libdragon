@@ -1,0 +1,7 @@
+dragon.out
+*.out
+*.o
+include/*
+libdragon.a
+*~
+#*#
