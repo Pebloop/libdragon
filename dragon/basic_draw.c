@@ -22,7 +22,7 @@ int put_pixel_in_fb(framebuffer_t *fb, unsigned int x,
     return 0;
 }
 
-//change a pixel
+//draw a square
 void draw_square(framebuffer_t *fb, sfVector2u position,
                  unsigned int size, sfColor color)
 {
