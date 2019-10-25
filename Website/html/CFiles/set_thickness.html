@@ -22,37 +22,26 @@
     </div>
 	 </header>
     <section>
-      <h1>framebuffer_create</h1>
-      <p>This function is used to initialize the framebuffer.</p>
+      <h1>set_thickness</h1>
+      <p>This function change the thickness parameter of a framebuffer, used to draw lines.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">framebuffer_t *framebuffer_create(unsigned int width, unsigned int height);</code></pre>
+        <pre><code class="lang-c line-numbers">void set_thickness(framebuffer_t *fb, unsigned int thickness);</code></pre>
         <ul>
-          <li>width : width of the grid</li>
-          <li>height : height of the grid</li>
-          <li>return : the initialized framebuffer</li>
+          <li>fb : framebuffer to update</li>
+          <li>thickness : new thickness</li>
         </ul>
       </div>
       <div class="part">
         <h2>Exemple</h2>
-        <pre><code class="lang-c line-numbers">framebuffer_t *fb = framebuffer_create(200, 300);</code></pre>
+        <pre><code class="lang-c line-numbers">set_thickness(fb, 10);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">framebuffer_t *framebuffer_create(unsigned int width, unsigned int height)
+        <pre><code class="lang-c line-numbers">void set_thickness(framebuffer_t *fb, unsigned int thickness)
 {
-    framebuffer_t *fb = malloc(sizeof(framebuffer_t));
-    sfTexture *tex = sfTexture_create(width, height);
-    sfSprite *sp = sfSprite_create();
-
-    sfSprite_setTexture(sp, tex, sfFalse);
-    fb->pixels = malloc(sizeof(sfUint8) * width * height * 4);
-    fb->width = width;
-    fb->height = height;
-    fb->sp = sp;
-    fb->thickness = 1;
-    return fb;
-}</code></pre>
+    fb->thickness = thickness;
+}</code></pre>       
       </div>
     </section>
   </body>
