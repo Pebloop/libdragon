@@ -9,6 +9,7 @@ SRC	=	dragon.c				\
 		framebuffer.c			\
 		basic_draw.c			\
 		draw_line.c				\
+		draw_circle.c			\
 
 OBJ	=	$(SRC:.c=.o)
 
