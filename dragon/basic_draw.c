@@ -12,7 +12,7 @@
 int put_pixel_in_fb(framebuffer_t *fb, unsigned int x,
                     unsigned int y, sfColor color)
 {
-    if (x > fb->width || y > fb->height)
+    if (x >= fb->width || y >= fb->height)
         return 1;
     int pos = (x + y * fb->width) * 4;
     fb->pixels[pos] = color.r;
