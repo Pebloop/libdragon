@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+  </head>
+
+  <body>
+	 <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+	 </header>
+    <section>
+      <h1>draw_circle</h1>
+      <p>This function draw a circle in a framebuffer.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">void draw_circle(framebuffer_t *fb, sfVector2u pos, unsigned int radius,
+                 sfColor color);</code></pre>
+        <ul>
+          <li>fb : framebuffer to draw in</li>
+          <li>pos : position of the circle (center)</li>
+          <li>radius : radius of the circle</li>
+          <li>color : color of the circle</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Exemple</h2>
+        <pre><code class="lang-c line-numbers">draw_circle(fb, pos, 20, sfWhite);</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">static int square(int nb)
+{
+    return nb * nb;
+}
+
+static void display_circle(framebuffer_t *fb, int *coord, sfColor color)
+{
+    int x = coord[0] - coord[4];
+    int y = coord[1] - coord[4];
+
+    if (square(x) + square(y) <= square(coord[4]))
+        put_pixel_in_fb(fb, x + coord[2], y + coord[3], color);
+}
+
+void draw_circle(framebuffer_t *fb, sfVector2u pos, unsigned int radius,
+                 sfColor color)
+{
+    int coord[5] = {0, 0, pos.x, pos.y, radius};
+
+    for (int x = 0; x < radius * 2; x++)
+        for (int y = 0; y < radius * 2; y++) {
+            coord[0] = x;
+            coord[1] = y;
+            display_circle(fb, coord, color);
+        }
+}static int square(int nb)
+{
+    return nb * nb;
+}
+
+static void display_circle(framebuffer_t *fb, int *coord, sfColor color)
+{
+    int x = coord[0] - coord[4];
+    int y = coord[1] - coord[4];
+
+    if (square(x) + square(y) <= square(coord[4]))
+        put_pixel_in_fb(fb, x + coord[2], y + coord[3], color);
+}
+
+void draw_circle(framebuffer_t *fb, sfVector2u pos, unsigned int radius,
+                 sfColor color)
+{
+    int coord[5] = {0, 0, pos.x, pos.y, radius};
+
+    for (int x = 0; x < radius * 2; x++)
+        for (int y = 0; y < radius * 2; y++) {
+            coord[0] = x;
+            coord[1] = y;
+            display_circle(fb, coord, color);
+        }
+}</code></pre>
+      </div>
+    </section>
+  </body>
+</html>
