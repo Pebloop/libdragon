@@ -8,12 +8,11 @@ all:	$(NAME)
 
 $(NAME):
 		make -C dragon/
-		gcc -o $(NAME) $(SRC) -Iinclude -L./ -ldragon -lcsfml-graphics -lm
-		clear
+		gcc -Wall -Wextra -o $(NAME) $(SRC) -Iinclude -L./ -ldragon -lcsfml-graphics -lm
 
 debug:
 		make -C dragon/
-		gcc -g3 -o $(DEBUG) $(SRC) -Iinclude -L./ -ldragon -lcsfml-graphics
+		gcc -g3 -o $(DEBUG) $(SRC) -Iinclude -L./ -ldragon -lcsfml-graphics -lm
 
 clean:
 		make clean -C dragon/

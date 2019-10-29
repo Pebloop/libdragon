@@ -16,4 +16,6 @@ void draw_square(framebuffer_t *, sfVector2u, unsigned int, sfColor);
 
 int draw_line(framebuffer_t *, sfVector2u, sfVector2u, sfColor);
 
+void draw_circle(framebuffer_t *, sfVector2u, unsigned int, sfColor);
+
 #endif

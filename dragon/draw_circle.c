@@ -13,7 +13,7 @@ static int square(int nb)
     return nb * nb;
 }
 
-void display_circle(framebuffer_t *fb, int *coord, sfColor color)
+static void display_circle(framebuffer_t *fb, int *coord, sfColor color)
 {
     int x = coord[0] - coord[4];
     int y = coord[1] - coord[4];
