@@ -11,6 +11,7 @@
 #include <SFML/Graphics.h>
 #include "framebuffer.h"
 #include "dg_drawing.h"
+#include "dg_math.h"
 
 int dg_play(unsigned int, unsigned int, char *);
 

@@ -21,6 +21,7 @@ framebuffer_t *framebuffer_create(unsigned int width, unsigned int height) {
     fb->height = height;
     fb->sp = sp;
     fb->thickness = 1;
+    fb->border = 0;
     return fb;
 }
 
@@ -45,4 +46,9 @@ void framebuffer_update(framebuffer_t *fb, sfRenderWindow *window)
 void set_thickness(framebuffer_t *fb, unsigned int thickness)
 {
     fb->thickness = thickness;
+}
+
+void set_border(framebuffer_t *fb, unsigned int border)
+{
+    fb->border = border;
 }

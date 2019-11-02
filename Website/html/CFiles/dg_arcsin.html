@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+  </head>
+
+  <body>
+   <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+   </header>
+    <section>
+      <h1>dg_arcsin</h1>
+      <p>This function calculate the angle in radian of a sin.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">double dg_arcsin(double x);</code></pre>
+        <ul>
+          <li>x : value of sin</li>
+          <li>return : angle in radian</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_arcsin(1));</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">double dg_arcsin(double x)
+{
+    double result;
+    long int top_factor = 1;
+    long int sub_factor = 1;
+
+    while (x > 1)
+        x--;
+    while (x < -1)
+        x++;
+    for (int i = 3; i <= PRECISION; i += 2) {
+        top_factor *= (i - 2);
+        sub_factor *= (i - 1);
+        result += (top_factor / sub_factor) * (dg_fpow(x, i) / i);
+    }
+    return result;
+}</code></pre>
+      </div>
+    </section>
+  </body>
+</html>

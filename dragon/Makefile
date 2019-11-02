@@ -10,6 +10,10 @@ SRC	=	dragon.c				\
 		basic_draw.c			\
 		draw_line.c				\
 		draw_circle.c			\
+		draw_rectangle.c		\
+		dg_math.c				\
+		dg_trigo.c				\
+		dg_trigo_part2.c		\
 
 OBJ	=	$(SRC:.c=.o)
 

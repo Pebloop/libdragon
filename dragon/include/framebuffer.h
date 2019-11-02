@@ -17,6 +17,7 @@ typedef struct framebuffer
     int height;
     sfSprite *sp;
     unsigned int thickness;
+    unsigned int border;
 } framebuffer_t;
 
 framebuffer_t *framebuffer_create(unsigned int, unsigned int);
