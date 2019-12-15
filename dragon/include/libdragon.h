@@ -12,7 +12,9 @@
 #include "framebuffer.h"
 #include "dg_drawing.h"
 #include "dg_math.h"
+#include "spritesheet.h"
+#include "animation.h"
 
-int dg_play(unsigned int, unsigned int, char *);
+int dg_play(unsigned int, unsigned int, char *, int);
 
 #endif

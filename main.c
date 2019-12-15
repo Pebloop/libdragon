@@ -1,59 +1,51 @@
+/*
+** EPITECH PROJECT, 2019
+** screensaver
+** File description:
+** manage the general use of the lib
+*/
+
+#include <stdlib.h>
 #include "libdragon.h"
 
-unsigned int state = 0;
-float force = 1;
-const float MPI = 3.1415926535;
-float pos = 0;
-float test = 0;
+typedef struct val {
+    spritesheet_t *ss;
+    animation_t *animation;
+    float i;
+} val_t;
 
-int dg_init(framebuffer_t *back_fb)
+void *dg_init(framebuffer_t *back_fb, sfRenderWindow *window, int id)
 {
-	return 0;
+    val_t *v = malloc(sizeof(val_t));
+
+    v->ss = spritesheet_create("res/bat.png", 32, 32);
+    v->animation = animation_create(v->ss, 0.00001);
+    v->i = 0;
+    animation_add(v->animation, 0);
+    animation_add(v->animation, 1);
+    animation_add(v->animation, 2);
+    return v;
 }
 
-int dg_loop(framebuffer_t *back_fb)
+int dg_loop(framebuffer_t *back_fb, sfRenderWindow *window, void *var, sfTime dt, int id)
 {
-    float x = 910 + dg_cos(pos) * 400;
-    float y = 512 + dg_sin(pos) * 200;
-    sfVector2u hook = {910, 100};
-    sfVector2u medal = {(int)(x), (int)(y)};
-    sfVector2u circle = {910 + dg_cos(test) * 200, 512 + dg_sin(test) * 200};
+    val_t *v = ((val_t *)(var));
+    sfSprite *sprite = sfSprite_create();
 
-	for (int x = 0; x < 1920; x++)
-		for (int y = 0; y < 1024; y++)
-			put_pixel_in_fb(back_fb, x, y, sfBlack);
-    draw_circle(back_fb, circle, 20, sfRed);
-    draw_line(back_fb, hook, medal, sfYellow);
-    put_pixel_in_fb(back_fb, 910, 512, sfGreen);
-    draw_circle(back_fb, medal, 50, sfWhite);
-    if (pos >= MPI) {
-        state = 1;
-        force = 1;
-    }
-    if (pos <= 0) {
-        state = 0;
-        force = 1;
-    }
-    if (state == 0) {
-        pos += 0.01 * force;
-        if (x < 910)
-            force -= 0.5;
-        else
-            force += 0.5;
-    }
-    if (state == 1) {
-        pos -= 0.01 * force;
-        if (x < 910)
-            force += 0.5;
-        else
-            force -= 0.5;
-    }
-    test += 0.1;
-	return 0;
+    sfRenderWindow_clear(window, sfBlack);
+    animation_update_sprite(v->animation, sprite, ((int)(v->i)));
+    sfRenderWindow_drawSprite(window, sprite, NULL);
+    v->i += dt.microseconds * v->animation->speed;
+    return 0;
 }
 
-int main(void)
+void dg_end(void *var, int id)
 {
-	dg_play(1920, 1024, "test");
+
+}
+
+int main(int argc, char **argv)
+{
+    dg_play(1920, 1080, "LibDragon", 0);
     return 0;
 }

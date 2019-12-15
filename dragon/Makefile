@@ -14,6 +14,8 @@ SRC	=	dragon.c				\
 		dg_math.c				\
 		dg_trigo.c				\
 		dg_trigo_part2.c		\
+		spritesheet.c			\
+		animation.c				\
 
 OBJ	=	$(SRC:.c=.o)
 

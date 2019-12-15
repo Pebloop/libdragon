@@ -39,7 +39,7 @@ int framebuffer_destroy(framebuffer_t *fb)
 void framebuffer_update(framebuffer_t *fb, sfRenderWindow *window)
 {
     sfTexture_updateFromPixels((sfTexture *) sfSprite_getTexture(fb->sp),
-                               fb->pixels, fb->width, fb->height, 0, 0);    
+                               fb->pixels, fb->width, fb->height, 0, 0);
     sfRenderWindow_drawSprite(window, fb->sp, NULL);
 }
 
