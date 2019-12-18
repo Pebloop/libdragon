@@ -23,7 +23,7 @@ static int check_spe(framebuffer_t *fb, sfVector2u p1,
     if (fb->thickness == 0)
         return 1;
     if (p1.x == p2.x && p1.y == p2.y) {
-        return put_pixel_in_fb(fb, p1.x, p1.y, color);
+        put_pixel_in_fb(fb, p1.x, p1.y, color);
         return 1;
     }
     if (nb == 1) {
