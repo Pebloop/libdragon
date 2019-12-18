@@ -14,6 +14,7 @@
 #include "dg_math.h"
 #include "spritesheet.h"
 #include "animation.h"
+#include "animator.h"
 
 int dg_play(unsigned int, unsigned int, char *, int);
 

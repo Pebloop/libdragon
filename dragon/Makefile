@@ -16,6 +16,8 @@ SRC	=	dragon.c				\
 		dg_trigo_part2.c		\
 		spritesheet.c			\
 		animation.c				\
+		animator.c				\
+		dep_tools.c				\
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -30,7 +32,7 @@ NAME	= libdragon.a
 all:	$(NAME)
 
 $(NAME):	$(SRC)
-	gcc -c $(SRC) -Iinclude
+	gcc -c -g3 $(SRC) -Iinclude
 	ar rc $(NAME) $(OBJ)
 	cp -r include/ ../
 	mv $(NAME) ../

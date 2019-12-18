@@ -8,7 +8,7 @@ all:	$(NAME)
 
 $(NAME):
 		make -C dragon/
-		gcc -o $(NAME) $(SRC) -Iinclude -L./ -ldragon -lcsfml-graphics -lcsfml-system
+		gcc -o $(NAME) $(SRC) -Iinclude -L./ -ldragon -lcsfml-graphics -lcsfml-system -lcsfml-window
 
 debug:
 		make -C dragon/

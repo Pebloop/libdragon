@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
+#include <SFML/Window.h>
 #include "framebuffer.h"
 
 void *dg_init(framebuffer_t *, sfRenderWindow *, int);
@@ -15,7 +16,7 @@ void dg_end(void *, int);
 
 int dg_loop(framebuffer_t *, sfRenderWindow *, void *, sfTime, int);
 
-static void dg_close_window(sfRenderWindow *window, sfEvent event)
+static void dg_manage_event(sfRenderWindow *window, sfEvent event)
 {
     while (sfRenderWindow_pollEvent(window, &event)) {
         if (event.type == sfEvtClosed) {
@@ -36,7 +37,7 @@ static void dg_render_screen(
     sfTime dt = {0};
 
     while (sfRenderWindow_isOpen(window)) {
-        dg_close_window(window, event);
+        dg_manage_event(window, event);
         dg_loop(fb, window, var, dt, id);
         framebuffer_update(fb, window);
         sfRenderWindow_display(window);
