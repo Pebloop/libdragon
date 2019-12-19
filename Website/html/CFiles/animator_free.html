@@ -22,36 +22,28 @@
     </div>
      </header>
     <section>
-      <h1>spritesheet_create</h1>
-      <p>This function is used to initialize the spritesheet.</p>
+      <h1>animator_free</h1>
+      <p>This function is used to destroy an animator.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">spritesheet_t *spritesheet_create(char *filepath, int x, int y);</code></pre>
+        <pre><code class="lang-c line-numbers">void animator_free(animator_t *animator);</code></pre>
         <ul>
-          <li>filepath : path of the image</li>
-          <li>x : width of a tile</li>
-          <li>y : height of a tile</li>
-          <li>return : the initialized spritesheet</li>
+          <li>animator : animator to destroy</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">spritesheet_t *sheet = spritesheet_create("res/bat.png", 32, 32);</code></pre>
+        <pre><code class="lang-c line-numbers">void animator_free(animator);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">spritesheet_t *spritesheet_create(char *filepath, int x, int y)
+        <pre><code class="lang-c line-numbers">void animator_free(animator_t *animator)
 {
-    spritesheet_t *spritesheet = malloc(sizeof(spritesheet_t));
-    sfImage *file = sfImage_createFromFile(filepath);
-    sfTexture *sheet = sfTexture_createFromImage(file, 0);
-
-    if (!spritesheet)
-        return 0;
-    spritesheet->sheet = sheet;
-    spritesheet->x = x;
-    spritesheet->y = y;
-    return spritesheet;
+    if (animator->length > 0) {
+        free(animator->animations);
+        free(animator->keys);
+    }
+    free(animator);
 }</code></pre>
       </div>
     </section>

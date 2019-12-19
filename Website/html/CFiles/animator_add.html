@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+  </head>
+
+  <body>
+     <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+     </header>
+    <section>
+      <h1>animator_add</h1>
+      <p>This function is used to add an animation to the animator.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">void animator_add(animator_t * animator, char * key, animation_t *animation);</code></pre>
+        <ul>
+          <li>animator : animator to destroy</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">animator_add(player, "walk", walk);</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">void animator_add(animator_t * animator, char * key, animation_t *animation)
+{
+    animation_t **new_anim_list = 0;
+    char **new_key_list = 0;
+
+    new_anim_list = malloc(sizeof(animation_t *) * (animator->length + 1));
+    new_key_list = malloc(sizeof(char *) * (animator->length + 1));
+    if (animator->length != 0) {
+        for (int i = 0; i < animator->length; i++) {
+            new_anim_list[i] = animator->animations[i];
+            new_key_list[i] = animator->keys[i];
+        }
+        free(animator->animations);
+        free(animator->keys);
+    }
+    new_anim_list[animator->length] = animation;
+    new_key_list[animator->length] = key;
+    animator->animations = new_anim_list;
+    animator->keys = new_key_list;
+    animator->length++;
+}</code></pre>
+      </div>
+    </section>
+  </body>
+</html>
