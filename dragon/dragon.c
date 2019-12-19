@@ -9,12 +9,13 @@
 #include <SFML/System.h>
 #include <SFML/Window.h>
 #include "framebuffer.h"
+#include "dg_window.h"
 
-void *dg_init(framebuffer_t *, sfRenderWindow *, int);
+void *dg_init();
 
 void dg_end(void *, int);
 
-int dg_loop(framebuffer_t *, sfRenderWindow *, void *, sfTime, int);
+int dg_loop(dg_window_t *, void *, sfTime);
 
 static void dg_manage_event(sfRenderWindow *window, sfEvent event)
 {
@@ -25,39 +26,33 @@ static void dg_manage_event(sfRenderWindow *window, sfEvent event)
     }
 }
 
-static void dg_render_screen(
-    sfRenderWindow *window,
-    void *var,
-    framebuffer_t *fb,
-    int id
-    )
+static void dg_render_screen(dg_window_t *window, void *var)
 {
     sfEvent event;
     sfClock *clock = sfClock_create();
     sfTime dt = {0};
 
-    while (sfRenderWindow_isOpen(window)) {
-        dg_manage_event(window, event);
-        dg_loop(fb, window, var, dt, id);
-        framebuffer_update(fb, window);
-        sfRenderWindow_display(window);
+    while (sfRenderWindow_isOpen(window->window)) {
+        dg_manage_event(window->window, event);
+        dg_loop(window, var, dt);
+        framebuffer_update(window->fb, window->window);
+        sfRenderWindow_display(window->window);
         dt = sfClock_getElapsedTime(clock);
         sfClock_restart(clock);
     }
-    dg_end(var, id);
+    dg_end(var, window->id);
     sfClock_destroy(clock);
 }
 
-void dg_play(unsigned int width, unsigned int height, char *name, int id)
+int dg_play(unsigned int width, unsigned int height, char *name, int id)
 {
-    sfVideoMode mode = {width, height, 32};
-    sfRenderWindow *window = sfRenderWindow_create(mode, name, sfClose, NULL);
-    framebuffer_t *back_fb = framebuffer_create(mode.width, mode.height);
-    void *var = 0;
+    dg_window_t *window = dg_window_create(width, height, name, id);
+    void *data = 0;
+    int to_return = 0;
 
-    var = dg_init(back_fb, window, id);
-    sfRenderWindow_clear(window, sfBlack);
-    dg_render_screen(window, var, back_fb, id);
-    framebuffer_destroy(back_fb);
-    sfRenderWindow_destroy(window);
+    data = dg_init(window);
+    sfRenderWindow_clear(window->window, sfBlack);
+    dg_render_screen(window, data);
+    dg_window_destroy(window);
+    return to_return;
 }

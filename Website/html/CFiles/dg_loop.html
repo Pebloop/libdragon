@@ -27,10 +27,14 @@
       This fonction is called during the loop wich display the window content. Use it to repeat action each time like drawing or modifying variables.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">int dg_loop(framebuffer_t *grid);</code></pre>
+        <pre><code class="lang-c line-numbers">int dg_loop(framebuffer_t *fb, sfRenderWindow *window, void *var, sfTime dt, int id);</code></pre>
         <ul>
-          <li>grid : the background grid</li>
-          <li>return : an int of your choice</li>
+          <li>fb : the background framebuffer</li>
+          <li>window : the window</li>
+          <li>var : variable that can be accessed anytime while the window is open</li>
+          <li>dt : delta time (in microseconds)</li>
+          <li>id : the id of the window</li>
+          <li>return : the int will be returned when the window is closed</li>
         </ul>
       </div>
     </section>

@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics.h>
 #include "framebuffer.h"
+#include "dg_window.h"
 #include "dg_drawing.h"
 #include "dg_math.h"
 #include "spritesheet.h"

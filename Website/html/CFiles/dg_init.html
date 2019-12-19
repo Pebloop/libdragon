@@ -27,10 +27,11 @@
       This fonction is called before the loop wich display the window content.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">int dg_init(framebuffer_t *grid);</code></pre>
+        <pre><code class="lang-c line-numbers">void *dg_init(framebuffer_t *fb, sfRenderWindow *window, int id);</code></pre>
         <ul>
-          <li>grid : the background grid</li>
-          <li>return : an int of your choice</li>
+          <li>fb : the background grid</li>
+          <li>window : the window</li>
+          <li>id : the id of the window</li>
         </ul>
       </div>
     </section>

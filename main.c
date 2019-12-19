@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "libdragon.h"
 
-typedef struct val {
+typedef struct data {
     spritesheet_t *ss;
     animator_t *animator;
     animation_t *down;
@@ -17,12 +17,12 @@ typedef struct val {
     animation_t *left;
     sfSprite *sprite;
     float i;
-} val_t;
+} data_t;
 
-void *dg_init(framebuffer_t *back_fb, sfRenderWindow *window, int id)
+void *dg_init(dg_window_t *window)
 {
     sfVector2f scale = {5, 5};
-    val_t *v = malloc(sizeof(val_t));
+    data_t *v = malloc(sizeof(data_t));
 
     v->sprite = sfSprite_create();
     v->ss = spritesheet_create("res/bat.png", 32, 32);
@@ -61,9 +61,9 @@ void *dg_init(framebuffer_t *back_fb, sfRenderWindow *window, int id)
     return v;
 }
 
-int dg_loop(framebuffer_t *back_fb, sfRenderWindow *window, void *var, sfTime dt, int id)
+int dg_loop(dg_window_t *window, void *var, sfTime dt)
 {
-    val_t *v = ((val_t *)(var));
+    data_t *v = ((data_t *)(var));
     sfVector2f move = {0, 0};
 
     if (sfKeyboard_isKeyPressed(sfKeyRight)) {
@@ -83,9 +83,9 @@ int dg_loop(framebuffer_t *back_fb, sfRenderWindow *window, void *var, sfTime dt
         animator_set_animation(v->animator, "up");
     }
     sfSprite_move(v->sprite, move);
-    sfRenderWindow_clear(window, sfBlack);
+    sfRenderWindow_clear(window->window, sfBlack);
     animator_update_sprite(v->animator, v->sprite, ((int)(v->i)));
-    sfRenderWindow_drawSprite(window, v->sprite, NULL);
+    sfRenderWindow_drawSprite(window->window, v->sprite, NULL);
     v->i += dt.microseconds * v->down->speed;
     return 0;
 }
