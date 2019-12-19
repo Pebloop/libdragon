@@ -11,7 +11,7 @@
 #include "framebuffer.h"
 #include "dg_window.h"
 
-void *dg_init();
+void *dg_init(dg_window_t *);
 
 void dg_end(void *, int);
 
