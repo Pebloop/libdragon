@@ -19,6 +19,11 @@ SRC	=	dragon.c				\
 		animator.c				\
 		dep_tools.c				\
 		dg_window.c				\
+		dg_component.c			\
+		dg_entity.c				\
+		dg_system.c				\
+		dg_scene.c				\
+		dg_system_animator.c	\
 
 OBJ	=	$(SRC:.c=.o)
 

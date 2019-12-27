@@ -7,10 +7,11 @@
 
 #include <stdlib.h>
 #include <SFML/Graphics.h>
+#include "dg_window.h"
 #include "animator.h"
 #include "epitech_tools.h"
 
-animator_t *animator_create()
+animator_t *animator_create(void)
 {
     animator_t *animator = malloc(sizeof(animator_t));
 
@@ -20,6 +21,7 @@ animator_t *animator_create()
     animator->length = 0;
     animator->animations = 0;
     animator->keys = 0;
+    animator->time = 0;
     return animator;
 }
 
@@ -48,15 +50,25 @@ void animator_add(animator_t * animator, char * key, animation_t *animation)
 void animator_update_sprite(
     animator_t *animator,
     sfSprite *sprite,
-    int time
+    int dt
     )
 {
-    if (animator && animator->length > animator->current) {
-        animation_t *animation = animator->animations[animator->current];
-        spritesheet_t *sheet = animation->sheet;
-        int frame = animation->frames[(int)(time % animation->size)];
-        spritesheet_to_sprite(sheet, sprite, frame);
+    animation_t *animation = 0;
+    spritesheet_t *sheet = 0;
+    animator->time += dt / 1000000.0;
+    int index = 0;
+
+    if (!animator || animator->length <= animator->current)
+        return;
+    animation = animator->animations[animator->current];
+    sheet = animation->sheet;
+    index = (int)(animator->time / (1 / animation->speed));
+    if (index >= animation->size) {
+        index = 0;
+        animator->time = 0;
     }
+    int frame = animation->frames[index];
+    spritesheet_to_sprite(sheet, sprite, frame);
 }
 
 void animator_set_animation(animator_t *animator, char *key)

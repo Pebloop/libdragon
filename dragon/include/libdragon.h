@@ -16,6 +16,10 @@
 #include "spritesheet.h"
 #include "animation.h"
 #include "animator.h"
+#include "dg_component.h"
+#include "dg_entity.h"
+#include "dg_system.h"
+#include "dg_scene.h"
 
 int dg_play(unsigned int, unsigned int, char *, int);
 

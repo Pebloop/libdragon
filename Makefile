@@ -1,4 +1,5 @@
-SRC	=	main.c	\
+SRC	=	main.c		\
+		player.c	\
 
 NAME	=	dragon.out
 
@@ -12,7 +13,7 @@ $(NAME):
 
 debug:
 		make -C dragon/
-		gcc -g3 -o $(DEBUG) $(SRC) -Iinclude -L./ -ldragon -lcsfml-graphics -lcsfml-system
+		gcc -g3 -o $(DEBUG) $(SRC) -Iinclude -L./ -ldragon -lcsfml-graphics -lcsfml-system -lcsfml-window
 
 clean:
 		make clean -C dragon/

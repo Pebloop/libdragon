@@ -9,7 +9,7 @@
 #define DG_WINDOW_H_
 
 #include <SFML/Graphics.h>
-#include "libdragon.h"
+#include "framebuffer.h"
 
 typedef struct dg_window
 {

@@ -9,6 +9,7 @@
 #define ANIMATOR_H_
 
 #include <SFML/Graphics.h>
+#include "dg_window.h"
 #include "animation.h"
 
 typedef struct animator
@@ -17,6 +18,7 @@ typedef struct animator
     char **keys;
     int length;
     int current;
+    float time;
 } animator_t;
 
 animator_t *animator_create();
