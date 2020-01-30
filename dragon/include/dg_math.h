@@ -10,6 +10,10 @@
 
 extern const double PI;
 
+int dg_square(int);
+
+int dg_abs(int);
+
 int dg_pow(int, int);
 
 double dg_fpow(double, int);

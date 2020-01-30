@@ -8,7 +8,7 @@
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 #include <SFML/Window.h>
-#include "framebuffer.h"
+#include "dg_framebuffer.h"
 #include "dg_window.h"
 
 void *dg_init(dg_window_t *);
@@ -35,7 +35,7 @@ static void dg_render_screen(dg_window_t *window, void *var)
     while (sfRenderWindow_isOpen(window->window)) {
         dg_manage_event(window->window, event);
         dg_loop(window, var, dt);
-        framebuffer_update(window->fb, window->window);
+        dg_framebuffer_update(window->fb, window->window);
         sfRenderWindow_display(window->window);
         dt = sfClock_getElapsedTime(clock);
         sfClock_restart(clock);

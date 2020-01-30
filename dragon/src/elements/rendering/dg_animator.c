@@ -8,12 +8,12 @@
 #include <stdlib.h>
 #include <SFML/Graphics.h>
 #include "dg_window.h"
-#include "animator.h"
+#include "dg_animator.h"
 #include "epitech_tools.h"
 
-animator_t *animator_create(void)
+dg_animator_t *dg_animator_create(void)
 {
-    animator_t *animator = malloc(sizeof(animator_t));
+    dg_animator_t *animator = malloc(sizeof(dg_animator_t));
 
     if (!animator)
         return 0;
@@ -25,12 +25,13 @@ animator_t *animator_create(void)
     return animator;
 }
 
-void animator_add(animator_t * animator, char * key, animation_t *animation)
+void dg_animator_add(dg_animator_t * animator, char * key,
+    dg_animation_t *animation)
 {
-    animation_t **new_anim_list = 0;
+    dg_animation_t **new_anim_list = 0;
     char **new_key_list = 0;
 
-    new_anim_list = malloc(sizeof(animation_t *) * (animator->length + 1));
+    new_anim_list = malloc(sizeof(dg_animation_t *) * (animator->length + 1));
     new_key_list = malloc(sizeof(char *) * (animator->length + 1));
     if (animator->length != 0) {
         for (int i = 0; i < animator->length; i++) {
@@ -47,14 +48,14 @@ void animator_add(animator_t * animator, char * key, animation_t *animation)
     animator->length++;
 }
 
-void animator_update_sprite(
-    animator_t *animator,
+void dg_animator_update_sprite(
+    dg_animator_t *animator,
     sfSprite *sprite,
     int dt
     )
 {
-    animation_t *animation = 0;
-    spritesheet_t *sheet = 0;
+    dg_animation_t *animation = 0;
+    dg_spritesheet_t *sheet = 0;
     animator->time += dt / 1000000.0;
     int index = 0;
 
@@ -68,10 +69,10 @@ void animator_update_sprite(
         animator->time = 0;
     }
     int frame = animation->frames[index];
-    spritesheet_to_sprite(sheet, sprite, frame);
+    dg_spritesheet_to_sprite(sheet, sprite, frame);
 }
 
-void animator_set_animation(animator_t *animator, char *key)
+void dg_animator_set_animation(dg_animator_t *animator, char *key)
 {
     int index = 0;
 
@@ -82,7 +83,7 @@ void animator_set_animation(animator_t *animator, char *key)
     animator->current = index;
 }
 
-void animator_free(animator_t *animator)
+void dg_animator_free(dg_animator_t *animator)
 {
     if (animator->length > 0) {
         free(animator->animations);

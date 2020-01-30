@@ -5,22 +5,22 @@
 ** draw rectangles
 */
 
-#include "dg_drawing.h"
+#include "dg_framebuffer.h"
 
-void draw_square(framebuffer_t *fb, sfVector2u position,
+void dg_fb_putsquare(dg_framebuffer_t *fb, sfVector2u position,
                  unsigned int size, sfColor color)
 {
     for (int i = position.x; i < position.x + size; i++)
         for (int j = position.y; j < position.y + size; j++)
-            put_pixel_in_fb(fb, i, j, color);
+            dg_fb_putpx(fb, i, j, color);
 }
 
 //draw a rectangle
-void draw_rectangle(framebuffer_t *fb, sfVector2u position,
+void dg_fb_putrectangle(dg_framebuffer_t *fb, sfVector2u position,
                     sfVector2u size, sfColor color)
 {
     for (int i = position.x; i < position.x + size.x; i++)
         for (int j = position.y; j < position.y + size.y; j++)
-            put_pixel_in_fb(fb, i, j, color);
+            dg_fb_putpx(fb, i, j, color);
 }
 

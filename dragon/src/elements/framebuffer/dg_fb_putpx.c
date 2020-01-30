@@ -6,11 +6,11 @@
 */
 
 #include <SFML/Graphics.h>
-#include "framebuffer.h"
+#include "dg_framebuffer.h"
 
 //change a pixel of a framebuffer
-int put_pixel_in_fb(framebuffer_t *fb, unsigned int x,
-                    unsigned int y, sfColor color)
+int dg_fb_putpx(dg_framebuffer_t *fb, unsigned int x,
+    unsigned int y, sfColor color)
 {
     if (x >= fb->width || y >= fb->height)
         return 1;

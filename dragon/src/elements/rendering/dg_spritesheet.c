@@ -7,11 +7,11 @@
 
 #include <stdlib.h>
 #include <SFML/Graphics.h>
-#include "spritesheet.h"
+#include "dg_spritesheet.h"
 
-spritesheet_t *spritesheet_create(char *filepath, int x, int y)
+dg_spritesheet_t *dg_spritesheet_create(char *filepath, int x, int y)
 {
-    spritesheet_t *spritesheet = malloc(sizeof(spritesheet_t));
+    dg_spritesheet_t *spritesheet = malloc(sizeof(dg_spritesheet_t));
     sfImage *file = sfImage_createFromFile(filepath);
     sfTexture *sheet = sfTexture_createFromImage(file, 0);
 
@@ -23,14 +23,14 @@ spritesheet_t *spritesheet_create(char *filepath, int x, int y)
     return spritesheet;
 }
 
-void spritesheet_free(spritesheet_t *spritesheet)
+void dg_spritesheet_free(dg_spritesheet_t *spritesheet)
 {
     sfTexture_destroy(spritesheet->sheet);
     free(spritesheet);
 }
 
-void spritesheet_to_sprite(
-    spritesheet_t *sheet,
+void dg_spritesheet_to_sprite(
+    dg_spritesheet_t *sheet,
     sfSprite *sprite,
     int id
     )

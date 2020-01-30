@@ -32,12 +32,3 @@ double dg_fpow(double number, int pow)
         result = number / dg_pow(number, 1 - pow);
     return result;
 }
-
-int dg_factorial(int n)
-{
-    int result = 1;
-
-    for (int i = 2; i <= n; i++)
-        result *= i;
-    return result;
-}

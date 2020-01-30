@@ -50,20 +50,7 @@ double dg_sin(double x)
     return result;
 }
 
-double dg_arcsin(double x)
+double dg_tan(double x)
 {
-    double result;
-    long int top_factor = 1;
-    long int sub_factor = 1;
-
-    while (x > 1)
-        x--;
-    while (x < -1)
-        x++;
-    for (int i = 3; i <= PRECISION; i += 2) {
-        top_factor *= (i - 2);
-        sub_factor *= (i - 1);
-        result += (top_factor / sub_factor) * (dg_fpow(x, i) / i);
-    }
-    return result;
+    return (dg_sin(x) / dg_cos(x));
 }

@@ -9,12 +9,12 @@
 #define DG_WINDOW_H_
 
 #include <SFML/Graphics.h>
-#include "framebuffer.h"
+#include "dg_framebuffer.h"
 
 typedef struct dg_window
 {
     sfRenderWindow *window;
-    framebuffer_t *fb;
+    dg_framebuffer_t *fb;
     int id;
 
 } dg_window_t;

@@ -9,13 +9,12 @@
 #define LIBDRAGON_H_
 
 #include <SFML/Graphics.h>
-#include "framebuffer.h"
+#include "dg_framebuffer.h"
 #include "dg_window.h"
-#include "dg_drawing.h"
 #include "dg_math.h"
-#include "spritesheet.h"
-#include "animation.h"
-#include "animator.h"
+#include "dg_spritesheet.h"
+#include "dg_animation.h"
+#include "dg_animator.h"
 #include "dg_component.h"
 #include "dg_entity.h"
 #include "dg_system.h"

@@ -24,13 +24,13 @@ dg_window_t *dg_window_create(
         return 0;
     window->id = id;
     window->window = sfRenderWindow_create(mode, name, sfClose, NULL);
-    window->fb = framebuffer_create(mode.width, mode.height);
+    window->fb = dg_framebuffer_create(mode.width, mode.height);
     return window;
 }
 
 void dg_window_destroy(dg_window_t *window)
 {
-    framebuffer_destroy(window->fb);
+    dg_framebuffer_destroy(window->fb);
     sfRenderWindow_destroy(window->window);
     free(window);
 }

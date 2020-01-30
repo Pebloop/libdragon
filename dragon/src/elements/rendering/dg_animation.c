@@ -7,11 +7,11 @@
 
 #include <stdlib.h>
 #include <SFML/Graphics.h>
-#include "animation.h"
+#include "dg_animation.h"
 
-animation_t *animation_create(spritesheet_t *sheet, float speed)
+dg_animation_t *dg_animation_create(dg_spritesheet_t *sheet, float speed)
 {
-    animation_t *animation = malloc(sizeof(animation_t));
+    dg_animation_t *animation = malloc(sizeof(dg_animation_t));
 
     if (!animation)
         return 0;
@@ -22,7 +22,7 @@ animation_t *animation_create(spritesheet_t *sheet, float speed)
     return animation;
 }
 
-void animation_add(animation_t *animation, int i)
+void dg_animation_add(dg_animation_t *animation, int i)
 {
     int *new_list = 0;
     if (!(animation->frames)) {
@@ -40,18 +40,18 @@ void animation_add(animation_t *animation, int i)
     }
 }
 
-void animation_update_sprite(
-    animation_t *animation,
+void dg_animation_update_sprite(
+    dg_animation_t *animation,
     sfSprite *sprite,
     int i
     )
 {
-    spritesheet_t *sheet = animation->sheet;
+    dg_spritesheet_t *sheet = animation->sheet;
     int frame = animation->frames[(int)(i % animation->size)];
-    spritesheet_to_sprite(sheet, sprite, frame);
+    dg_spritesheet_to_sprite(sheet, sprite, frame);
 }
 
-void animation_free(animation_t *animation)
+void dg_animation_free(dg_animation_t *animation)
 {
     free(animation);
 }
