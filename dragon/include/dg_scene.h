@@ -30,4 +30,6 @@ void dg_scene_destroy(dg_scene_t *);
 
 void dg_scene_update(dg_scene_t *, dg_window_t *, sfTime);
 
+dg_entity_t *dg_get_entity(dg_array_t *, char *);
+
 #endif /*DG_SCENE_H*/

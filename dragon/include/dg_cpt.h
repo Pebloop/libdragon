@@ -14,4 +14,6 @@ dg_component_t *dg_cpt_sprite(sfVector2f *);
 
 dg_component_t *dg_cpt_animator(dg_animator_t *(*)(void));
 
+dg_component_t *dg_cpt_pos(int, int);
+
 #endif /*DG_CPT_H*/

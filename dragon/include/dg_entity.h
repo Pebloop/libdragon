@@ -31,4 +31,6 @@ dg_component_t *dg_entity_rm_component(dg_entity_t *, char *);
 
 void dg_entity_free_component(dg_entity_t *, char *);
 
+dg_entity_t *dg_ent_camera(int, int);
+
 #endif /*DG_ENTITY_H*/

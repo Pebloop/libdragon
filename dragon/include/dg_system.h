@@ -26,4 +26,6 @@ int dg_system_require(dg_entity_t *, unsigned int, ...);
 
 void dg_sys_animator(dg_entity_t *, dg_window_t *, dg_array_t **, sfTime);
 
+void dg_sys_render(dg_entity_t *, dg_window_t *, dg_array_t **, sfTime);
+
 #endif /*DG_SYSTEM_H*/

@@ -43,10 +43,14 @@ SRC_ECS_STC =	src/ecs/struct/dg_component.c					\
 				src/ecs/struct/dg_system.c						\
 				src/ecs/struct/dg_scene.c						\
 
-SRC_ECS_S =		src/ecs/systems/dg_system_animator.c			\
+SRC_ECS_S =		src/ecs/systems/dg_sys_animator.c				\
+				src/ecs/systems/dg_sys_render.c					\
 
 SRC_ECS_C =		src/ecs/components/dg_cpt_animator.c			\
 				src/ecs/components/dg_cpt_sprite.c				\
+				src/ecs/components/dg_cpt_pos.c					\
+
+SRC_ECS_E =		src/ecs/entities/dg_ent_camera.c				\
 
 SRC_ALL =	$(SRC_SKL)		\
 			$(SRC_EPI)		\
@@ -57,6 +61,7 @@ SRC_ALL =	$(SRC_SKL)		\
 			$(SRC_ECS_S)	\
 			$(SRC_LIST)		\
 			$(SRC_ECS_C)	\
+			$(SRC_ECS_E)	\
 
 OBJ	=	$(SRC_ALL:.c=.o)
 

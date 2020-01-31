@@ -74,3 +74,18 @@ void dg_scene_update(dg_scene_t *scene, dg_window_t *w, sfTime dt)
         }
     }
 }
+
+dg_entity_t *dg_get_entity(dg_array_t *entities, char *name)
+{
+    dg_entity_t *ent = 0;
+
+    if (!entities || !name)
+        return 0;
+    while (entities && entities->data) {
+        ent = ((dg_entity_t *)(entities->data));
+        if (!dg_strcmp(ent->name, name))
+            return ent;
+        entities = entities->next;
+    }
+    return 0;
+}

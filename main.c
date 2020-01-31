@@ -20,8 +20,10 @@ void *dg_init(dg_window_t *window)
 
     v->scene_game = dg_scene_create();
     dg_scene_add_ent(v->scene_game, entity_player_create());
+    dg_scene_add_ent(v->scene_game, dg_ent_camera(0, 0));
     dg_scene_add_sys(v->scene_game, dg_system_create(&system_player_control));
     dg_scene_add_sys(v->scene_game, dg_system_create(&dg_sys_animator));
+    dg_scene_add_sys(v->scene_game, dg_system_create(&dg_sys_render));
     return v;
 }
 
