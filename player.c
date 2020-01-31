@@ -56,7 +56,8 @@ dg_entity_t *entity_player_create()
     return player;
 }
 
-void system_player_control(dg_entity_t *entity, dg_window_t *w, sfTime dt)
+void system_player_control(dg_entity_t *entity, dg_window_t *w,
+    dg_array_t **entities, sfTime dt)
 {
     sfVector2f move = {0, 0};
     dg_animator_t *animator = (dg_animator_t *)(dg_entity_get_component(entity, "animator"));

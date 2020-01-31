@@ -8,7 +8,8 @@
 #include <stdlib.h>
 #include "libdragon.h"
 
-void dg_sys_animator(dg_entity_t *entity, dg_window_t *w, sfTime dt)
+void dg_sys_animator(dg_entity_t *entity, dg_window_t *w,
+    dg_array_t **entities, sfTime dt)
 {
     dg_animator_t *animator = (dg_animator_t *)
         (dg_entity_get_component(entity, "animator"));

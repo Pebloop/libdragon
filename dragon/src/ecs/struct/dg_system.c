@@ -9,8 +9,7 @@
 #include <stdarg.h>
 #include "dg_system.h"
 
-dg_system_t *dg_system_create(void (*action)(dg_entity_t *,
-    dg_window_t *, sfTime))
+dg_system_t *dg_system_create(dg_sysf_t action)
 {
     dg_system_t *system = 0;
 

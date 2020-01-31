@@ -61,6 +61,7 @@ void dg_scene_update(dg_scene_t *scene, dg_window_t *w, sfTime dt)
 {
     dg_array_t *tmp = 0;
     dg_array_t *sys = 0;
+    dg_system_t *vsystem = 0;
     int sp_component = -1;
     sfSprite *sprite = 0;
 
@@ -68,13 +69,8 @@ void dg_scene_update(dg_scene_t *scene, dg_window_t *w, sfTime dt)
         return;
     for (tmp = scene->entities; tmp; tmp = tmp->next) {
         for (sys = scene->systems; sys; sys = sys->next) {
-            ((dg_system_t *)(sys->data))->system(tmp->data, w, dt);
-        }
-        sp_component = dg_entity_has_component(tmp->data, "sprite");
-        if (sp_component >= 0) {
-            sprite = (sfSprite *)(dg_entity_get_component(tmp->data,
-                "sprite"));
-            sfRenderWindow_drawSprite(w->window, sprite, NULL);
+            vsystem = ((dg_system_t *)(sys->data));
+            vsystem->system(tmp->data, w, &(scene->entities),dt);
         }
     }
 }
