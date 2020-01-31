@@ -87,9 +87,10 @@ void dg_scene_update(dg_scene_t *scene, dg_window_t *w, sfTime dt)
         for (int i = 0; i < scene->sys_len; i++) {
             scene->systems[i]->system(scene->entities[y], w, dt);
         }
-        sp_component = dg_entity_is_component(scene->entities[y], "sprite");
+        sp_component = dg_entity_has_component(scene->entities[y], "sprite");
         if (sp_component >= 0) {
-            sprite = (sfSprite *)(dg_entity_get(scene->entities[y], "sprite"));
+            sprite = (sfSprite *)(dg_entity_get_component(scene->entities[y],
+                "sprite"));
             sfRenderWindow_drawSprite(w->window, sprite, NULL);
         }
     }

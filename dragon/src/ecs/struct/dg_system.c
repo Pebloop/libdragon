@@ -35,7 +35,7 @@ int dg_system_require(dg_entity_t *entity, unsigned int len, ...)
 
     va_start(arg, len);
     for (int i = 0; i < len; i++) {
-        if (dg_entity_is_component(entity, va_arg(arg, char *)) >= 0)
+        if (dg_entity_has_component(entity, va_arg(arg, char *)) >= 0)
             test++;
     }
     if (test == len)

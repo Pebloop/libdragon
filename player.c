@@ -7,8 +7,9 @@
 
 #include <stdlib.h>
 #include "libdragon.h"
+#include "epitech_tools.h"
 
-static dg_animator_t *set_player_animator()
+static dg_animator_t *set_player_animator(void)
 {
     dg_animator_t *animator = dg_animator_create();
     dg_spritesheet_t *ss = dg_spritesheet_create("res/bat.png", 32, 32);
@@ -48,27 +49,20 @@ static dg_animator_t *set_player_animator()
 dg_entity_t *entity_player_create()
 {
     sfVector2f scale = {5, 5};
-    dg_entity_t *player = dg_entity_create();
-    sfSprite *sprite = sfSprite_create();
-    dg_animator_t *animator = set_player_animator();
-    dg_component_t *c_sprite = dg_component_create("sprite", sprite);
-    dg_component_t *c_animator = dg_component_create("animator", animator);
-    dg_component_t *c_player = dg_component_create("player", NULL);
+    dg_entity_t *player = dg_entity_create("player");
 
-    dg_entity_add(player, c_sprite);
-    dg_entity_add(player, c_animator);
-    dg_entity_add(player, c_player);
-    sfSprite_setScale(sprite, scale);
+    dg_entity_add_component(player, dg_cpt_sprite(&scale));
+    dg_entity_add_component(player, dg_cpt_animator(&set_player_animator));
     return player;
 }
 
 void system_player_control(dg_entity_t *entity, dg_window_t *w, sfTime dt)
 {
     sfVector2f move = {0, 0};
-    dg_animator_t *animator = (dg_animator_t *)(dg_entity_get(entity, "animator"));
-    sfSprite *sprite = (sfSprite *)(dg_entity_get(entity, "sprite"));
+    dg_animator_t *animator = (dg_animator_t *)(dg_entity_get_component(entity, "animator"));
+    sfSprite *sprite = (sfSprite *)(dg_entity_get_component(entity, "sprite"));
 
-    if (!dg_system_require(entity, 3, "animator", "sprite", "player"))
+    if (!dg_system_require(entity, 2, "animator", "sprite") || dg_strcmp(entity->name, "player"))
         return;
     if (sfKeyboard_isKeyPressed(sfKeyRight)) {
         move.x += 1;
@@ -85,6 +79,9 @@ void system_player_control(dg_entity_t *entity, dg_window_t *w, sfTime dt)
     if (sfKeyboard_isKeyPressed(sfKeyUp)) {
         move.y -= 1;
         dg_animator_set_animation(animator, "up");
+    }
+    if (sfKeyboard_isKeyPressed(sfKeySpace)) {
+        dg_entity_free_component(entity, "sprite");
     }
     sfSprite_move(sprite, move);
 }

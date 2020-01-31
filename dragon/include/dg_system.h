@@ -22,6 +22,6 @@ void dg_system_destroy(dg_system_t *);
 
 int dg_system_require(dg_entity_t *, unsigned int, ...);
 
-void dg_system_player_animator(dg_entity_t *, dg_window_t *, sfTime);
+void dg_sys_animator(dg_entity_t *, dg_window_t *, sfTime);
 
 #endif /*DG_SYSTEM_H*/
