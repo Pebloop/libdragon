@@ -18,7 +18,7 @@ static void ingd_circle(dg_framebuffer_t *fb, int *coord, sfColor color)
 }
 
 void dg_fb_putcircle(dg_framebuffer_t *fb, sfVector2u pos, unsigned int radius,
-                 sfColor color)
+    sfColor color)
 {
     int coord[5] = {0, 0, pos.x, pos.y, radius};
 

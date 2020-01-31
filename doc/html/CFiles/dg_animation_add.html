@@ -22,28 +22,38 @@
     </div>
      </header>
     <section>
-      <h1>animator_free</h1>
-      <p>This function is used to destroy an animator.</p>
+      <h1>dg_animation_add</h1>
+      <p>This function is used to add a frame in the animation.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void animator_free(animator_t *animator);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_animation_add(dg_animation_t *animation, int i)</code></pre>
         <ul>
-          <li>animator : animator to destroy</li>
+          <li>animation : animation to change</li>
+          <li>i : index of the new frame</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">void animator_free(animator);</code></pre>
+        <pre><code class="lang-c line-numbers">animation_add(animation, 2);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void animator_free(animator_t *animator)
+        <pre><code class="lang-c line-numbers">void dg_animation_add(dg_animation_t *animation, int i)
 {
-    if (animator->length > 0) {
-        free(animator->animations);
-        free(animator->keys);
+    int *new_list = 0;
+    if (!(animation->frames)) {
+        animation->frames = malloc(sizeof(int));
+        animation->frames[0] = i;
+        animation->size = 1;
+    } else {
+        new_list = malloc(sizeof(int) * (animation->size + 1));
+        for (int i = 0; i < animation->size; i++)
+            new_list[i] = animation->frames[i];
+        new_list[animation->size] = i;
+        animation->size++;
+        free(animation->frames);
+        animation->frames = new_list;
     }
-    free(animator);
 }</code></pre>
       </div>
     </section>

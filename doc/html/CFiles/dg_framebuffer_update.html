@@ -22,30 +22,27 @@
     </div>
 	 </header>
     <section>
-      <h1>framebuffer_destroy</h1>
-      <p>This function is used to free the framebuffer in the memory.</p>
+      <h1>dg_framebuffer_update</h1>
+      <p>This function is used to update the framebuffer (to display it). If not used, the changes will not appear on the window.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">int framebuffer_destroy(framebuffer_t *fb)</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_framebuffer_update(dg_framebuffer_t *fb, sfRenderWindow *window);</code></pre>
         <ul>
-          <li>fb : framebuffer to free</li>
-          <li>return : 0</li>
+          <li>fb : framebuffer to update</li>
+          <li>window : the window where the fb will be displayed</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">framebuffer_destroy(fb);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_framebuffer_update(fb, window);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">int framebuffer_destroy(framebuffer_t *fb)
+        <pre><code class="lang-c line-numbers">void dg_framebuffer_update(dg_framebuffer_t *fb, sfRenderWindow *window)
 {
-    free(fb->pixels);
-    sfTexture_destroy((sfTexture *) sfSprite_getTexture(fb->sp));
-    sfSprite_destroy(fb->sp);
-
-    free(fb);
-    return 0;
+    sfTexture_updateFromPixels((sfTexture *) sfSprite_getTexture(fb->sp),
+                               fb->pixels, fb->width, fb->height, 0, 0);
+    sfRenderWindow_drawSprite(window, fb->sp, NULL);
 }</code></pre>
       </div>
     </section>

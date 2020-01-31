@@ -22,31 +22,25 @@
     </div>
      </header>
     <section>
-      <h1>animator_set_animation</h1>
-      <p>This function is used to change the used animation with the animator.</p>
+      <h1>dg_spritesheet_free</h1>
+      <p>This function is used to destroy the spritesheet.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void animator_set_animation(animator_t *animator, char *key);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_spritesheet_free(dg_spritesheet_t *spritesheet);</code></pre>
         <ul>
-          <li>animator : animator to modify</li>
-          <li>key : name of the animation</li>
+          <li>spritesheet : spritesheet to destroy</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">animator_set_animation(animator, "walk");</code></pre>
+        <pre><code class="lang-c line-numbers">dg_spritesheet_free(sheet);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void animator_set_animation(animator_t *animator, char *key)
+        <pre><code class="lang-c line-numbers">void dg_spritesheet_free(dg_spritesheet_t *spritesheet)
 {
-    int index = 0;
-
-    for (int i = 0; i < animator->length; i++) {
-        if (!dg_strcmp(animator->keys[i], key))
-            index = i;
-    }
-    animator->current = index;
+    sfTexture_destroy(spritesheet->sheet);
+    free(spritesheet);
 }</code></pre>
       </div>
     </section>

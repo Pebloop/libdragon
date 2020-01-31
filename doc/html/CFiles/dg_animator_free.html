@@ -22,31 +22,28 @@
     </div>
      </header>
     <section>
-      <h1>animator_update_sprite</h1>
-      <p>This function is used to add an animation to the animator.</p>
+      <h1>dg_animator_free</h1>
+      <p>This function is used to destroy an animator.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void animator_update_sprite(animator_t *animator, sfSprite *sprite, int time);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_animator_free(dg_animator_t *animator);</code></pre>
         <ul>
-          <li>animator : animator to use</li>
-          <li>sprite : sprite to update</li>
-          <li>time : timin second</li>
+          <li>animator : animator to destroy</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">animator_update_sprite(animator, sprite, dt);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_animator_free(animator);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void animator_update_sprite(animator_t *animator, sfSprite *sprite, int time)
+        <pre><code class="lang-c line-numbers">void dg_animator_free(dg_animator_t *animator)
 {
-    if (animator && animator->length > animator->current) {
-        animation_t *animation = animator->animations[animator->current];
-        spritesheet_t *sheet = animation->sheet;
-        int frame = animation->frames[(int)(time % animation->size)];
-        spritesheet_to_sprite(sheet, sprite, frame);
+    if (animator->length > 0) {
+        free(animator->animations);
+        free(animator->keys);
     }
+    free(animator);
 }</code></pre>
       </div>
     </section>

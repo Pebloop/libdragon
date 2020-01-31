@@ -22,27 +22,27 @@
     </div>
      </header>
     <section>
-      <h1>animator_add</h1>
+      <h1>dg_animator_add</h1>
       <p>This function is used to add an animation to the animator.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void animator_add(animator_t * animator, char * key, animation_t *animation);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_animator_add(dg_dg_animation_t * animator, char * key, dg_animation_t *animation);</code></pre>
         <ul>
           <li>animator : animator to destroy</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">animator_add(player, "walk", walk);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_animator_add(player, "walk", walk);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void animator_add(animator_t * animator, char * key, animation_t *animation)
+        <pre><code class="lang-c line-numbers">void dg_animator_add(dg_animation_t * animator, char * key, dg_animation_t *animation)
 {
-    animation_t **new_anim_list = 0;
+    dg_animation_t **new_anim_list = 0;
     char **new_key_list = 0;
 
-    new_anim_list = malloc(sizeof(animation_t *) * (animator->length + 1));
+    new_anim_list = malloc(sizeof(dg_animation_t *) * (animator->length + 1));
     new_key_list = malloc(sizeof(char *) * (animator->length + 1));
     if (animator->length != 0) {
         for (int i = 0; i < animator->length; i++) {

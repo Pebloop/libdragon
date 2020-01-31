@@ -22,11 +22,11 @@
     </div>
 	 </header>
     <section>
-      <h1>put_pixel_in_fb</h1>
+      <h1>dg_fb_putpx</h1>
       <p>This function modify a pixel of a framebuffer.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">int put_pixel_in_fb(framebuffer_t *fb, unsigned int x, unsigned int y, sfColor color);</code></pre>
+        <pre><code class="lang-c line-numbers">int dg_fb_putpx(dg_framebuffer_t *fb, unsigned int x, unsigned int y, sfColor color);</code></pre>
         <ul>
           <li>fb : framebuffer to modify</li>
           <li>x : x coordinate of the pixel</li>
@@ -37,20 +37,21 @@
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">put_pixel_in_fb(fb, 500, 50, sfRed);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_fb_putpx(fb, 500, 50, sfRed);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">int put_pixel_in_fb(framebuffer_t *fb, unsigned int x, unsigned int y, sfColor color)
+        <pre><code class="lang-c line-numbers">int dg_fb_putpx(dg_framebuffer_t *fb, unsigned int x,
+    unsigned int y, sfColor color)
 {
-    if (x > fb->width || y > fb->height)
+    if (x >= fb->width || y >= fb->height)
         return 1;
     int pos = (x + y * fb->width) * 4;
     fb->pixels[pos] = color.r;
     fb->pixels[pos + 1] = color.g;
     fb->pixels[pos + 2] = color.b;
     fb->pixels[pos + 3] = color.a;
-    return 0;s
+    return 0;
 }</code></pre>
       </div>
     </section>

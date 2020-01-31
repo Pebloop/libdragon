@@ -22,12 +22,11 @@
     </div>
 	 </header>
     <section>
-      <h1>draw_circle</h1>
+      <h1>dg_fb_putcircle</h1>
       <p>This function draw a circle in a framebuffer.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void draw_circle(framebuffer_t *fb, sfVector2u pos, unsigned int radius,
-                 sfColor color);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_fb_putcircle(dg_framebuffer_t *fb, sfVector2u pos, unsigned int radius, sfColor color);</code></pre>
         <ul>
           <li>fb : framebuffer to draw in</li>
           <li>pos : position of the circle (center)</li>
@@ -37,26 +36,21 @@
       </div>
       <div class="part">
         <h2>Exemple</h2>
-        <pre><code class="lang-c line-numbers">draw_circle(fb, pos, 20, sfWhite);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_fb_putcircle(fb, pos, 20, sfWhite);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">static int square(int nb)
-{
-    return nb * nb;
-}
-
-static void display_circle(framebuffer_t *fb, int *coord, sfColor color)
+        <pre><code class="lang-c line-numbers">static void ingd_circle(dg_framebuffer_t *fb, int *coord, sfColor color)
 {
     int x = coord[0] - coord[4];
     int y = coord[1] - coord[4];
 
-    if (square(x) + square(y) <= square(coord[4]))
-        put_pixel_in_fb(fb, x + coord[2], y + coord[3], color);
+    if (dg_square(x) + dg_square(y) <= dg_square(coord[4]))
+        dg_fb_putpx(fb, x + coord[2], y + coord[3], color);
 }
 
-void draw_circle(framebuffer_t *fb, sfVector2u pos, unsigned int radius,
-                 sfColor color)
+void dg_fb_putcircle(dg_framebuffer_t *fb, sfVector2u pos, unsigned int radius,
+    sfColor color)
 {
     int coord[5] = {0, 0, pos.x, pos.y, radius};
 
@@ -64,32 +58,7 @@ void draw_circle(framebuffer_t *fb, sfVector2u pos, unsigned int radius,
         for (int y = 0; y < radius * 2; y++) {
             coord[0] = x;
             coord[1] = y;
-            display_circle(fb, coord, color);
-        }
-}static int square(int nb)
-{
-    return nb * nb;
-}
-
-static void display_circle(framebuffer_t *fb, int *coord, sfColor color)
-{
-    int x = coord[0] - coord[4];
-    int y = coord[1] - coord[4];
-
-    if (square(x) + square(y) <= square(coord[4]))
-        put_pixel_in_fb(fb, x + coord[2], y + coord[3], color);
-}
-
-void draw_circle(framebuffer_t *fb, sfVector2u pos, unsigned int radius,
-                 sfColor color)
-{
-    int coord[5] = {0, 0, pos.x, pos.y, radius};
-
-    for (int x = 0; x < radius * 2; x++)
-        for (int y = 0; y < radius * 2; y++) {
-            coord[0] = x;
-            coord[1] = y;
-            display_circle(fb, coord, color);
+            ingd_circle(fb, coord, color);
         }
 }</code></pre>
       </div>

@@ -22,29 +22,30 @@
     </div>
 	 </header>
     <section>
-      <h1>draw_square</h1>
-      <p>This function draw a square in a framebuffer.</p>
+      <h1>dg_fb_putrectangle</h1>
+      <p>This function draw a rectangle in a framebuffer.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void draw_square(framebuffer_t *fb, sfVector2u position, unsigned int size, sfColor color);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_fb_putrectangle(dg_framebuffer_t *fb, sfVector2u position, sfVector2u size, sfColor color);</code></pre>
         <ul>
           <li>fb : framebuffer to draw in</li>
-          <li>position : position of the square (top left)</li>
-          <li>size : size of the square</li>
-          <li>color : color of the square</li>
+          <li>position : position of the rectangle (top left)</li>
+          <li>size : size of the rectangle</li>
+          <li>color : color of the rectangle</li>
         </ul>
       </div>
       <div class="part">
-        <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">draw_square(fb, pos, 20, sfBlue);</code></pre>
+        <h2>Exemple</h2>
+        <pre><code class="lang-c line-numbers">dg_fb_putrectangle(fb, pos, size, sfBlue);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void draw_square(framebuffer_t *fb, sfVector2u position, unsigned int size, sfColor color)
+        <pre><code class="lang-c line-numbers">void dg_fb_putrectangle(dg_framebuffer_t *fb, sfVector2u position,
+                    sfVector2u size, sfColor color)
 {
-    for (int i = position.x; i < position.x + size; i++)
-        for (int j = position.y; j < position.y + size; j++)
-            put_pixel_in_fb(fb, i, j, color);
+    for (int i = position.x; i < position.x + size.x; i++)
+        for (int j = position.y; j < position.y + size.y; j++)
+            dg_fb_putpx(fb, i, j, color);
 }</code></pre>
       </div>
     </section>

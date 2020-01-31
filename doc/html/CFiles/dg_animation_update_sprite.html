@@ -22,25 +22,28 @@
     </div>
      </header>
     <section>
-      <h1>spritesheet_free</h1>
-      <p>This function is used to destroy the spritesheet.</p>
+      <h1>dg_animation_update_sprite</h1>
+      <p>This function is used update the sprite following the animation management. Animation DO NOT manage the time !</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void spritesheet_free(spritesheet_t *spritesheet);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_animation_update_sprite(dg_dg_animation_t *animation, sfSprite *sprite, int i);</code></pre>
         <ul>
-          <li>spritesheet : spritesheet to destroy</li>
+          <li>animation : animation to use</li>
+          <li>sprite : sprite to update</li>
+          <li>i : frame tu use</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">spritesheet_free(sheet);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_animation_add(animation, 2);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void spritesheet_free(spritesheet_t *spritesheet)
+        <pre><code class="lang-c line-numbers">void dg_animation_update_sprite(dg_dg_animation_t *animation, sfSprite *sprite, int i)
 {
-    sfTexture_destroy(spritesheet->sheet);
-    free(spritesheet);
+    dg_spritesheet_t *sheet = animation->sheet;
+    int frame = animation->frames[(int)(i % animation->size)];
+    dg_spritesheet_to_sprite(sheet, sprite, frame);
 }</code></pre>
       </div>
     </section>

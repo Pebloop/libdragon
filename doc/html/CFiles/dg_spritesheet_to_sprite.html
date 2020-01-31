@@ -22,11 +22,11 @@
     </div>
      </header>
     <section>
-      <h1>spritesheet_to_sprite</h1>
+      <h1>dg_spritesheet_to_sprite</h1>
       <p>This function is used to update a sprite from a spritesheet.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void spritesheet_to_sprite(spritesheet_t *sheet, sfSprite *sprite, int id);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_spritesheet_to_sprite(dg_spritesheet_t *sheet, sfSprite *sprite, int id);</code></pre>
         <ul>
           <li>sheet : spritesheet to use</li>
           <li>sprite : sprite to update</li>
@@ -35,11 +35,15 @@
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">spritesheet_to_sprite(sheet, sprite, 3);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_spritesheet_to_sprite(sheet, sprite, 3);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void spritesheet_to_sprite(spritesheet_t *sheet, sfSprite *sprite, int id)
+        <pre><code class="lang-c line-numbers">void dg_spritesheet_to_sprite(
+    dg_spritesheet_t *sheet,
+    sfSprite *sprite,
+    int id
+    )
 {
     sfVector2u image_size = sfTexture_getSize(sheet->sheet);
     sfIntRect pos = {0, 0, sheet->x, sheet->y};

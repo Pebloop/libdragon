@@ -22,34 +22,32 @@
     </div>
      </header>
     <section>
-      <h1>animation_create</h1>
-      <p>This function is used to initialize the animation.</p>
+      <h1>dg_animator_create</h1>
+      <p>This function is used to initialize an animator.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">animation_t *animation_create(spritesheet_t *sheet, float speed);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_animator_t *dg_animator_create();</code></pre>
         <ul>
-          <li>sheet : spritesheet to use</li>
-          <li>speed : time to change frames</li>
-          <li>return : the initialized animation</li>
+          <li>return : the initialized animator</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">animation_t *animation = animation_create(sheet, 2);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_animator_t *animator = dg_animator_create();</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">animation_t *animation_create(spritesheet_t *sheet, float speed)
+        <pre><code class="lang-c line-numbers">dg_animator_t *dg_animator_create()
 {
-    animation_t *animation = malloc(sizeof(animation_t));
+    dg_animator_t *animator = malloc(sizeof(dg_animator_t));
 
-    if (!animation)
+    if (!animator)
         return 0;
-    animation->sheet = sheet;
-    animation->speed = speed;
-    animation->frames = 0;
-    animation->size = 0;
-    return animation;
+    animator->current = 0;
+    animator->length = 0;
+    animator->animations = 0;
+    animator->keys = 0;
+    return animator;
 }</code></pre>
       </div>
     </section>

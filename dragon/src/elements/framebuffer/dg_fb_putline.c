@@ -27,8 +27,8 @@ static int indg_check_spe(dg_framebuffer_t *fb, sfVector2u p1,
     return 0;
 }
 
-int dg_fb_putline(dg_framebuffer_t *fb, sfVector2u p1,
-              sfVector2u p2, sfColor color)
+int dg_fb_putline(dg_framebuffer_t *fb, sfVector2u p1, sfVector2u p2,
+    sfColor color)
 {
     sfVector2u actual = {0, 0};
     unsigned int nb = dg_abs(p1.x - p2.x) + dg_abs(p1.y - p2.y);

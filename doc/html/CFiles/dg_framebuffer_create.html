@@ -22,11 +22,11 @@
     </div>
 	 </header>
     <section>
-      <h1>framebuffer_create</h1>
+      <h1>dg_framebuffer_create</h1>
       <p>This function is used to initialize the framebuffer.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">framebuffer_t *framebuffer_create(unsigned int width, unsigned int height);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_framebuffer_t *dg_framebuffer_create(unsigned int width, unsigned int height);</code></pre>
         <ul>
           <li>width : width of the grid</li>
           <li>height : height of the grid</li>
@@ -35,13 +35,13 @@
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">framebuffer_t *fb = framebuffer_create(200, 300);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_framebuffer_t *fb = dg_framebuffer_create(200, 300);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">framebuffer_t *framebuffer_create(unsigned int width, unsigned int height)
-{
-    framebuffer_t *fb = malloc(sizeof(framebuffer_t));
+        <pre><code class="lang-c line-numbers">dg_framebuffer_t *dg_framebuffer_create(unsigned int width,
+    unsigned int height) {
+    dg_framebuffer_t *fb = malloc(sizeof(dg_framebuffer_t));
     sfTexture *tex = sfTexture_create(width, height);
     sfSprite *sp = sfSprite_create();
 
@@ -51,6 +51,7 @@
     fb->height = height;
     fb->sp = sp;
     fb->thickness = 1;
+    fb->border = 0;
     return fb;
 }</code></pre>
       </div>

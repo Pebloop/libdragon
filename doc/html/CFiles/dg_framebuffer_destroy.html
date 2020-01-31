@@ -22,30 +22,29 @@
     </div>
 	 </header>
     <section>
-      <h1>draw_rectangle</h1>
-      <p>This function draw a rectangle in a framebuffer.</p>
+      <h1>dg_framebuffer_destroy</h1>
+      <p>This function is used to free the framebuffer in the memory.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void draw_rectangle(framebuffer_t *fb, sfVector2u position, sfVector2u size, sfColor color);</code></pre>
+        <pre><code class="lang-c line-numbers">int dg_framebuffer_destroy(dg_framebuffer_t *fb)</code></pre>
         <ul>
-          <li>fb : framebuffer to draw in</li>
-          <li>position : position of the rectangle (top left)</li>
-          <li>size : size of the rectangle</li>
-          <li>color : color of the rectangle</li>
+          <li>fb : framebuffer to free</li>
+          <li>return : 0</li>
         </ul>
       </div>
       <div class="part">
-        <h2>Exemple</h2>
-        <pre><code class="lang-c line-numbers">draw_rectangle(fb, pos, size, sfBlue);</code></pre>
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_framebuffer_destroy(fb);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void draw_rectangle(framebuffer_t *fb, sfVector2u position,
-                 sfVector2u size, sfColor color)
+        <pre><code class="lang-c line-numbers">int dg_framebuffer_destroy(dg_framebuffer_t *fb)
 {
-    for (int i = position.x; i < position.x + size.x; i++)
-        for (int j = position.y; j < position.y + size.y; j++)
-            put_pixel_in_fb(fb, i, j, color);
+    free(fb->pixels);
+    sfTexture_destroy((sfTexture *) sfSprite_getTexture(fb->sp));
+    sfSprite_destroy(fb->sp);
+    free(fb);
+    return 0;
 }</code></pre>
       </div>
     </section>

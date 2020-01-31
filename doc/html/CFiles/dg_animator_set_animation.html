@@ -22,28 +22,31 @@
     </div>
      </header>
     <section>
-      <h1>animation_update_sprite</h1>
-      <p>This function is used update the sprite following the animation management. Animation DO NOT manage the time !</p>
+      <h1>dg_animator_set_animation</h1>
+      <p>This function is used to change the used animation with the animator.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void animation_update_sprite(animation_t *animation, sfSprite *sprite, int i);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_animator_set_animation(dg_animator_t *animator, char *key);</code></pre>
         <ul>
-          <li>animation : animation to use</li>
-          <li>sprite : sprite to update</li>
-          <li>i : frame tu use</li>
+          <li>animator : animator to modify</li>
+          <li>key : name of the animation</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">animation_add(animation, 2);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_animator_set_animation(animator, "walk");</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void animation_update_sprite(animation_t *animation, sfSprite *sprite, int i)
+        <pre><code class="lang-c line-numbers">void dg_animator_set_animation(dg_animator_t *animator, char *key)
 {
-    spritesheet_t *sheet = animation->sheet;
-    int frame = animation->frames[(int)(i % animation->size)];
-    spritesheet_to_sprite(sheet, sprite, frame);
+    int index = 0;
+
+    for (int i = 0; i < animator->length; i++) {
+        if (!dg_strcmp(animator->keys[i], key))
+            index = i;
+    }
+    animator->current = index;
 }</code></pre>
       </div>
     </section>

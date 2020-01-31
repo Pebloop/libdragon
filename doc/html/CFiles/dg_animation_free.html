@@ -22,22 +22,22 @@
     </div>
      </header>
     <section>
-      <h1>animation_free</h1>
+      <h1>dg_animation_free</h1>
       <p>This function is used to destroy an animation.</p>
       <div class="part">
         <h2>Usage</h2>
-        <pre><code class="lang-c line-numbers">void animation_free(animation_t *animation);</code></pre>
+        <pre><code class="lang-c line-numbers">void dg_animation_free(dg_animation_t *animation);</code></pre>
         <ul>
           <li>animation : animation to destroy</li>
         </ul>
       </div>
       <div class="part">
         <h2>Example</h2>
-        <pre><code class="lang-c line-numbers">animation_free(animation);</code></pre>
+        <pre><code class="lang-c line-numbers">dg_animation_free(animation);</code></pre>
       </div>
       <div class="part">
         <h2>Source code</h2>
-        <pre><code class="lang-c line-numbers">void animation_free(animation_t *animation)
+        <pre><code class="lang-c line-numbers">void dg_animation_free(dg_animation_t *animation)
 {
     free(animation);
 }</code></pre>
