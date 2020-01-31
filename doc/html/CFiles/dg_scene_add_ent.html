@@ -22,16 +22,28 @@
     </div>
      </header>
     <section>
-      <h1>dg_spritesheet_t</h1>
-      <p>spritesheet</p>
+      <h1>dg_scene_add_ent</h1>
+      <p>This function is used to add an entity to a scene.</p>
       <div class="part">
-        <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct dg_spritesheet
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">void dg_scene_add_ent(dg_scene_t *scene, dg_entity_t *entity);</code></pre>
+        <ul>
+          <li>scene : scene</li>
+          <li>entity : entity to add</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_scene_add_ent(scene, dg_ent_player());</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">void dg_scene_add_ent(dg_scene_t *scene, dg_entity_t *entity)
 {
-    sfTexture *sheet;
-    unsigned int x;
-    unsigned int y;
-} dg_spritesheet_t;</code></pre>
+    if (!scene || !entity)
+        return;
+    dg_arr_add_begin(&(scene->entities), entity);
+}</code></pre>
       </div>
     </section>
   </body>

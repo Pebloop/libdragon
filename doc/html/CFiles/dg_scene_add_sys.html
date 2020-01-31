@@ -22,16 +22,28 @@
     </div>
      </header>
     <section>
-      <h1>dg_spritesheet_t</h1>
-      <p>spritesheet</p>
+      <h1>dg_scene_add_sys</h1>
+      <p>This function is used to add a system to a scene.</p>
       <div class="part">
-        <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct dg_spritesheet
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">void dg_scene_add_sys(dg_scene_t *scene, dg_system_t *system);</code></pre>
+        <ul>
+          <li>scene : scene</li>
+          <li>system : system to add</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_scene_add_sys(scene, &dg_sys_render);</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">void dg_scene_add_sys(dg_scene_t *scene, dg_system_t *system)
 {
-    sfTexture *sheet;
-    unsigned int x;
-    unsigned int y;
-} dg_spritesheet_t;</code></pre>
+    if (!scene || !system)
+        return;
+    dg_arr_add_begin(&(scene->systems), system);
+}</code></pre>
       </div>
     </section>
   </body>

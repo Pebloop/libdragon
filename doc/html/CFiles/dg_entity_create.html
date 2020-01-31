@@ -22,16 +22,31 @@
     </div>
      </header>
     <section>
-      <h1>dg_spritesheet_t</h1>
-      <p>spritesheet</p>
+      <h1>dg_entity_create</h1>
+      <p>This function is used to create a component.</p>
       <div class="part">
-        <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct dg_spritesheet
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">dg_entity_t *dg_entity_create(char *name);</code></pre>
+        <ul>
+          <li>name : name of the entity</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_entity_t *entity = dg_entity_create("camera");</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">dg_entity_t *dg_entity_create(char *name)
 {
-    sfTexture *sheet;
-    unsigned int x;
-    unsigned int y;
-} dg_spritesheet_t;</code></pre>
+    dg_entity_t *entity = malloc(sizeof(dg_entity_t));
+
+    if (!entity)
+        return 0;
+    entity->name = name;
+    entity->components = 0;
+    return entity;
+}</code></pre>
       </div>
     </section>
   </body>

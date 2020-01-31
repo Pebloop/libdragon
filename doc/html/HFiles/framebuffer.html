@@ -22,18 +22,19 @@
     </div>
 	 </header>
     <section>
-      <h1>framebuffer_t</h1>
+      <h1>dg_framebuffer_t</h1>
       <p>Grid of pixels.</p>
       <div class="part">
         <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct framebuffer
+        <pre><code class="lang-c line-numbers">typedef struct dg_framebuffer
 {
     sfUint8 *pixels;
     int width;
     int height;
     sfSprite *sp;
     unsigned int thickness;
-} framebuffer_t;</code></pre>
+    unsigned int border;
+} dg_framebuffer_t;</code></pre>
       </div>
     </section>
   </body>

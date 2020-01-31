@@ -22,17 +22,18 @@
     </div>
      </header>
     <section>
-      <h1>animator_t</h1>
+      <h1>dg_animator_t</h1>
       <p>animation manager</p>
       <div class="part">
         <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct animator
+        <pre><code class="lang-c line-numbers">typedef struct dg_animator
 {
-    animation_t **animations;
+    dg_animation_t **animations;
     char **keys;
     int length;
     int current;
-} animator_t;</code></pre>
+    float time;
+} dg_animator_t;</code></pre>
       </div>
     </section>
   </body>

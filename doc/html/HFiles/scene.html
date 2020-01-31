@@ -22,16 +22,16 @@
     </div>
      </header>
     <section>
-      <h1>dg_spritesheet_t</h1>
-      <p>spritesheet</p>
+      <h1>dg_scene_t</h1>
+      <p>scene</p>
       <div class="part">
         <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct dg_spritesheet
+        <pre><code class="lang-c line-numbers">typedef struct dg_scene
 {
-    sfTexture *sheet;
-    unsigned int x;
-    unsigned int y;
-} dg_spritesheet_t;</code></pre>
+    sfVector2f camera;
+    dg_array_t *entities;
+    dg_array_t *systems;
+} dg_scene_t;</code></pre>
       </div>
     </section>
   </body>

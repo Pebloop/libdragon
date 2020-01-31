@@ -22,16 +22,29 @@
     </div>
      </header>
     <section>
-      <h1>dg_spritesheet_t</h1>
-      <p>spritesheet</p>
+      <h1>dg_ent_camera</h1>
+      <p>This function is used to create a camera entity.</p>
       <div class="part">
-        <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct dg_spritesheet
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">dg_entity_t *dg_ent_camera(int x, int y);</code></pre>
+        <ul>
+          <li>x : x position</li>
+          <li>y : y position</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_scene_add_ent(v->scene_game, dg_ent_camera(0, 0));</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">dg_entity_t *dg_ent_camera(int x, int y)
 {
-    sfTexture *sheet;
-    unsigned int x;
-    unsigned int y;
-} dg_spritesheet_t;</code></pre>
+    dg_entity_t *entity = dg_entity_create("camera");
+
+    dg_entity_add_component(entity, dg_cpt_pos(x, y));
+    return entity;
+}</code></pre>
       </div>
     </section>
   </body>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+  </head>
+
+  <body>
+     <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+     </header>
+    <section>
+      <h1>dg_sys_render</h1>
+      <p>This function is used to create render system.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">void dg_sys_render(dg_entity_t *entity, dg_window_t *w,
+    dg_array_t **entities, sfTime dt);</code></pre>
+        <ul>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_scene_add_sys(v->scene_game, dg_system_create(&dg_sys_render));</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">static void display_sprite(sfVector2f camera, dg_entity_t *entity,
+    dg_window_t *w)
+{
+    sfVector2f reverse = {-camera.x, -camera.y};
+    sfSprite *sprite = 0;
+
+    if (dg_system_require(entity, 1, "sprite")) {
+            sprite = (sfSprite *)(dg_entity_get_component(entity, "sprite"));
+            sfSprite_move(sprite, reverse);
+            sfRenderWindow_drawSprite(w->window, sprite, NULL);
+            sfSprite_move(sprite, camera);
+        }
+}
+
+void dg_sys_render(dg_entity_t *entity, dg_window_t *w,
+    dg_array_t **entities, sfTime dt)
+{
+    sfVector2f *camera = (sfVector2f *)(dg_entity_get_component(entity, "pos"));
+
+
+    if (!entity || dg_strcmp(entity->name, "camera"))
+        return;
+    for (dg_array_t *ent = *entities; ent; ent = ent->next) {
+            display_sprite(*camera, ent->data, w);
+    }
+}</code></pre>
+      </div>
+    </section>
+  </body>
+</html>

@@ -22,16 +22,28 @@
     </div>
      </header>
     <section>
-      <h1>dg_spritesheet_t</h1>
-      <p>spritesheet</p>
+      <h1>dg_component_destroy</h1>
+      <p>This function is used to destroy a component.</p>
       <div class="part">
-        <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct dg_spritesheet
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">void dg_component_destroy(dg_component_t *component);</code></pre>
+        <ul>
+          <li>component : component to destroy.</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_component_destroy(component);</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">void dg_component_destroy(dg_component_t *component)
 {
-    sfTexture *sheet;
-    unsigned int x;
-    unsigned int y;
-} dg_spritesheet_t;</code></pre>
+    if (!component)
+        return;
+    component->on_destroy(component->data);
+    free(component);
+}</code></pre>
       </div>
     </section>
   </body>

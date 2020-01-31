@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+  </head>
+
+  <body>
+     <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+     </header>
+    <section>
+      <h1>dg_system_require</h1>
+      <p>This function is used to check if the needed components are in the entity.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">int dg_system_require(dg_entity_t *entity, unsigned int len, ...);</code></pre>
+        <ul>
+          <li>entity : entity</li>
+          <li>len : number of components</li>
+          <li>... : name of the components</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">if (!dg_system_require(entity, 3, "pos", "sprite", "texture")) return;</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">int dg_system_require(dg_entity_t *entity, unsigned int len, ...)
+{
+    va_list arg;
+    unsigned int test = 0;
+
+    va_start(arg, len);
+    for (int i = 0; i < len; i++) {
+        if (dg_entity_has_component(entity, va_arg(arg, char *)) >= 0)
+            test++;
+    }
+    if (test == len)
+        return 1;
+    return 0;
+}</code></pre>
+      </div>
+    </section>
+  </body>
+</html>

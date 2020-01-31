@@ -26,38 +26,212 @@
     <p>Before reading the tutorial, check the <a href="download.html">Download</a>, <a href="install.html">Install</a> and <a href="compile.html">Compile</a> pages.</p>
     <div class="part">
     <h2>main function</h2>
-    <p>To use the libdragon, you'll need to create the dg_init and dg_loop functions.<br />
+    <p>To use the libdragon, you'll need to create the dg_init, dg_loop and dg_end functions.<br />
     Use the dg_play function to create a new window.</p>
 
 <pre><code class="lang-c line-numbers">#include "libdragon.h"
-      	
-int dg_init(framebuffer_t *grid)
+
+void *dg_init(dg_window_t *window)
 {
     return 0;
 }
 
-int dg_loop(framebuffer_t *grid)
+int dg_loop(dg_window_t *w, void *var, sfTime dt)
 {
     return 0;
 }
+
+void dg_end(void *var, int id)
+{
+    return 0;
+}
+
 
 int main(void)
 {
-    dg_play(1920, 1024, "window");
+    dg_play(1920, 1080, "LibDragon", 0);
 }</code></pre>
   </div>
   <div class="part">
     <h2>the grid framebuffer</h2>
     <p>The grid framebuffer has the window size and can be modified without the loop reseting it.<br />
     Go to the framebuffer_t page to know how to use them.</p>
-    <pre><code class="lang-c line-numbers">int dg_loop(framebuffer_t *grid)
+    <pre><code class="lang-c line-numbers">int dg_loop(dg_window_t *w, void *var, sfTime dt)
 {
     sfVector2u vector = {20, 20};
-      
-    draw_square(grid, vector, 200, sfBlue);
+
+    draw_square(w->fb, vector, 200, sfBlue);
     return 0;
 }
 </code></pre>
+  </div>
+    <div class="part">
+    <h2>the Animator</h2>
+    <p>The animator is a struct of animation.<br />
+    You can use it to generate animations and change the animations very easely!.<br />
+You just have to create spritesheets, create animations, set the animation and add the animations to the animation and give them a name!</p>
+    <pre><code class="lang-c line-numbers">static dg_animator_t *set_player_animator(void)
+{
+    dg_animator_t *animator = dg_animator_create();
+    dg_spritesheet_t *ss = dg_spritesheet_create("res/bat.png", 32, 32);
+    dg_animation_t *down = dg_animation_create(ss, 10);
+    dg_animation_t *right = dg_animation_create(ss, 10);
+    dg_animation_t *up = dg_animation_create(ss, 10);
+    dg_animation_t *left = dg_animation_create(ss, 10);
+
+    dg_animation_add(down, 0);
+    dg_animation_add(down, 1);
+    dg_animation_add(down, 2);
+    dg_animation_add(down, 3);
+
+    dg_animation_add(right, 4);
+    dg_animation_add(right, 5);
+    dg_animation_add(right, 6);
+    dg_animation_add(right, 7);
+
+    dg_animation_add(left, 12);
+    dg_animation_add(left, 13);
+    dg_animation_add(left, 14);
+    dg_animation_add(left, 15);
+
+    dg_animation_add(up, 8);
+    dg_animation_add(up, 9);
+    dg_animation_add(up, 10);
+    dg_animation_add(up, 11);
+
+    dg_animator_add(animator, "down", down);
+    dg_animator_add(animator, "right", right);
+    dg_animator_add(animator, "up", up);
+    dg_animator_add(animator, "left", left);
+
+    return animator;
+}
+</code></pre>
+  </div>
+  <div class="part">
+    <h2>the ECS</h2>
+    <p>The ECS is an architecture made of systems, entities, components and scenes.<br /><br />
+        Components : simples variables<br />
+        Entities : group of components<br />
+        Systems : functions that affect the components<br />
+        Scene : a scene (ex : menu, game, ...)<br /><br />
+    </p>
+    <pre><code class="lang-c line-numbers">typedef struct data {
+    dg_scene_t *scene_game;
+} data_t;
+
+void *dg_init(dg_window_t *window)
+{
+    sfVector2f scale = {5, 5};
+    data_t *v = malloc(sizeof(data_t));
+
+    v->scene_game = dg_scene_create();
+    dg_scene_add_ent(v->scene_game, entity_player_create());
+    dg_scene_add_ent(v->scene_game, dg_ent_camera(0, 0));
+    dg_scene_add_sys(v->scene_game, dg_system_create(&system_player_control));
+    dg_scene_add_sys(v->scene_game, dg_system_create(&dg_sys_animator));
+    dg_scene_add_sys(v->scene_game, dg_system_create(&dg_sys_render));
+    return v;
+}
+
+int dg_loop(dg_window_t *w, void *var, sfTime dt)
+{
+    data_t *v = ((data_t *)(var));
+
+    sfRenderWindow_clear(w->window, sfBlack);
+    dg_scene_update(v->scene_game, w, dt);
+    return 0;
+}
+
+void dg_end(void *var, int id)
+{
+    data_t *v = ((data_t *)(var));
+
+    dg_scene_destroy(v->scene_game);
+}</code></pre>
+  </div>
+   <div class="part">
+    <h2>the Components</h2>
+    <p>The component are just variables or structures.<br />
+        You have to create a function to free it and one to create it.<br />
+        You'll also have to name it.<br />
+    </p>
+    <pre><code class="lang-c line-numbers">static void component_destroy(void *data)
+{
+    sfVector2f *pos = (sfVector2f *)(data);
+
+    free(pos);
+}
+
+dg_component_t *dg_cpt_pos(int x, int y)
+{
+    void (*destroy)(void *) = &component_destroy;
+    sfVector2f *pos = 0;
+    dg_component_t *component = 0;
+
+    pos = malloc(sizeof(sfVector2f));
+    pos->x = x;
+    pos->y = y;
+    component = dg_component_create("pos", pos, destroy);
+    return component;
+}</code></pre>
+  </div>
+    </div>
+   <div class="part">
+    <h2>the Entities</h2>
+    <p>The entities are group of Components.<br />
+        You have to add the components it contains and name it<br />
+    </p>
+    <pre><code class="lang-c line-numbers">dg_entity_t *dg_ent_camera(int x, int y)
+{
+    dg_entity_t *entity = dg_entity_create("camera");
+
+    dg_entity_add_component(entity, dg_cpt_pos(x, y));
+    return entity;
+}</code></pre>
+  </div>
+   <div class="part">
+    <h2>the Systems</h2>
+    <p>The Systems are functions that interact with the components.<br />
+        It can render a sprite, move an object, change a text, ...<br />
+        Use the "dg_system_require" function to impact only the entities with the good components!<br />
+    </p>
+    <pre><code class="lang-c line-numbers">void dg_sys_animator(dg_entity_t *entity, dg_window_t *w,
+    dg_array_t **entities, sfTime dt)
+{
+    dg_animator_t *animator = (dg_animator_t *)
+        (dg_entity_get_component(entity, "animator"));
+    sfSprite *sprite = (sfSprite *)(dg_entity_get_component(entity, "sprite"));
+
+    if (!dg_system_require(entity, 2, "animator", "sprite"))
+        return;
+    dg_animator_update_sprite(animator, sprite, dt.microseconds);
+}</code></pre>
+  </div>
+  <div class="part">
+    <h2>the Scene</h2>
+    <p>The Scenes are parts of the game.<br />
+        They contains all the entities and systems.<br />
+        They can be menu or game_scene<br />
+        You'll need to add all the entities and system as below.<br />
+    </p>
+    <pre><code class="lang-c line-numbers">dg_scene_t *scene_game_create(char *filepath)
+{
+    dg_scene_t *scene_game = dg_scene_create("game");
+
+    dg_scene_add_ent(scene_game, entity_parallax_create());
+    dg_scene_add_ent(scene_game, entity_camera_create());
+    load_map(scene_game, filepath);
+    dg_scene_add_ent(scene_game, entity_player_create());
+    dg_scene_add_ent(scene_game, entity_music_create("res/ost.ogg"));
+    dg_scene_add_sys(scene_game, dg_system_create(&system_parallax));
+    dg_scene_add_sys(scene_game, dg_system_create(&system_player_control));
+    dg_scene_add_sys(scene_game, dg_system_create(&system_player_animator));
+    dg_scene_add_sys(scene_game, dg_system_create(&system_camera_sp_render));
+    dg_scene_add_sys(scene_game, dg_system_create(&system_hud_sp_render));
+    dg_scene_add_sys(scene_game, dg_system_create(&system_display_text));
+    return scene_game;
+}</code></pre>
   </div>
   <div class="part">
     <h2><a href="https://www.sfml-dev.org">CSFML</a></h2>
@@ -65,6 +239,7 @@ int main(void)
       Moreover you don't need to include <a href="https://www.sfml-dev.org">CSFML</a> in your c file, libdragon.h already do it, but you need to compile with <a href="https://www.sfml-dev.org">CSFML</a>.<br />
       Go to the <a href="compile.html">compile page</a> to get more information.</p>
     </div>
+
   </section>
   </body>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+  </head>
+
+  <body>
+     <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+     </header>
+    <section>
+      <h1>dg_system_create</h1>
+      <p>This function is used to create a system.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">dg_system_t *dg_system_create(dg_sysf_t action);</code></pre>
+        <ul>
+          <li>action : function of the system</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_system_t *render = dg_system_create(&dg_sys_render)</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">dg_system_t *dg_system_create(dg_sysf_t action)
+{
+    dg_system_t *system = 0;
+
+    if (!action)
+        return 0;
+    system = malloc(sizeof(dg_system_t));
+    if (!system)
+        return 0;
+    system->system = action;
+    return system;
+}</code></pre>
+      </div>
+    </section>
+  </body>
+</html>

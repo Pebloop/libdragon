@@ -22,16 +22,32 @@
     </div>
      </header>
     <section>
-      <h1>dg_spritesheet_t</h1>
-      <p>spritesheet</p>
+      <h1>dg_scene_create</h1>
+      <p>This function is used to create a scene.</p>
       <div class="part">
-        <h2>H File</h2>
-        <pre><code class="lang-c line-numbers">typedef struct dg_spritesheet
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">dg_scene_t *dg_scene_create(void);</code></pre>
+        <ul>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_scene_t *scene = dg_scene_create();</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">dg_scene_t *dg_scene_create(void)
 {
-    sfTexture *sheet;
-    unsigned int x;
-    unsigned int y;
-} dg_spritesheet_t;</code></pre>
+    dg_scene_t *scene = malloc(sizeof(dg_scene_t));
+
+    if (!scene)
+        return 0;
+    scene->camera.x = 0;
+    scene->camera.y = 0;
+    scene->entities = 0;
+    scene->systems = 0;
+    return scene;
+}</code></pre>
       </div>
     </section>
   </body>

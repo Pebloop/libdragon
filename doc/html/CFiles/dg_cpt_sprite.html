@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+  </head>
+
+  <body>
+     <header>
+    <div>
+      <a href="../../../index.html" class="logo">
+        <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+        LIBDRAGON
+      </a>
+      <a href="../download.html" class="menu">Download</a>
+      <a href="../tutorial.html" class="menu">Tutorial</a>
+      <a href="../CFiles.html" class="menu">C Files</a>
+      <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+     </header>
+    <section>
+      <h1>dg_cpt_sprite</h1>
+      <p>This function is used to create a sprite component.</p>
+      <div class="part">
+        <h2>Usage</h2>
+        <pre><code class="lang-c line-numbers">dg_component_t *dg_cpt_sprite(sfVector2f *scale);</code></pre>
+        <ul>
+          <li>scale : scaling of the sprite</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h2>Example</h2>
+        <pre><code class="lang-c line-numbers">dg_entity_add_component(player, dg_cpt_sprite(&scale));</code></pre>
+      </div>
+      <div class="part">
+        <h2>Source code</h2>
+        <pre><code class="lang-c line-numbers">static void component_destroy(void *data)
+{
+    sfSprite *sprite = (sfSprite *)(data);
+
+    sfSprite_destroy(sprite);
+}
+
+dg_component_t *dg_cpt_sprite(sfVector2f *scale)
+{
+    dg_cpt_destroy_t destroy = &component_destroy;
+    sfSprite *sprite = sfSprite_create();
+    dg_component_t *component = dg_component_create("sprite", sprite, destroy);
+
+    if (scale)
+        sfSprite_setScale(sprite, *scale);
+    return component;
+}</code></pre>
+      </div>
+    </section>
+  </body>
+</html>
