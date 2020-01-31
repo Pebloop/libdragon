@@ -18,78 +18,61 @@ dg_scene_t *dg_scene_create(void)
     scene->camera.x = 0;
     scene->camera.y = 0;
     scene->entities = 0;
-    scene->ent_len = 0;
     scene->systems = 0;
-    scene->sys_len = 0;
     return scene;
 }
 
 void dg_scene_add_ent(dg_scene_t *scene, dg_entity_t *entity)
 {
-    dg_entity_t **entities = 0;
-
     if (!scene || !entity)
         return;
-    entities = malloc(sizeof(dg_entity_t *) * (scene->ent_len + 1));
-    if (!entities)
-        return;
-    if (scene->ent_len > 0) {
-        for (int i = 0; i < scene->ent_len; i++)
-            entities[i] = scene->entities[i];
-        free(scene->entities);
-    }
-    entities[scene->ent_len] = entity;
-    scene->entities = entities;
-    scene->ent_len++;
+    dg_arr_add_begin(&(scene->entities), entity);
 }
 
 void dg_scene_add_sys(dg_scene_t *scene, dg_system_t *system)
 {
-    dg_system_t **systems = 0;
-
     if (!scene || !system)
         return;
-    systems = malloc(sizeof(dg_system_t *) * (scene->sys_len + 1));
-    if (!systems)
-        return;
-    if (scene->sys_len > 0) {
-        for (int i = 0; i < scene->sys_len; i++)
-            systems[i] = scene->systems[i];
-        free(scene->systems);
-    }
-    systems[scene->sys_len] = system;
-    scene->systems = systems;
-    scene->sys_len++;
+    dg_arr_add_begin(&(scene->systems), system);
 }
 
 void dg_scene_destroy(dg_scene_t *scene)
 {
+    dg_array_t *tmp = 0;
+
     if (!scene)
         return;
-    if (scene->entities) {
-        for (int i = 0; i < scene->ent_len; i++)
-            dg_entity_destroy(scene->entities[i]);
-        free(scene->entities);
+    tmp = scene->entities;
+    while (tmp) {
+        dg_entity_destroy(tmp->data);
+        tmp = tmp->next;
     }
-    if (scene->systems) {
-        for (int i = 0; i < scene->sys_len; i++)
-            dg_system_destroy(scene->systems[i]);
-        free(scene->systems);
+    dg_arr_free_all(&(scene->entities));
+    tmp = scene->systems;
+    while (tmp) {
+        dg_system_destroy(tmp->data);
+        tmp = tmp->next;
     }
+    dg_arr_free_all(&(scene->systems));
+    free(scene);
 }
 
 void dg_scene_update(dg_scene_t *scene, dg_window_t *w, sfTime dt)
 {
+    dg_array_t *tmp = 0;
+    dg_array_t *sys = 0;
     int sp_component = -1;
     sfSprite *sprite = 0;
 
-    for (int y = 0; y < scene->ent_len; y++) {
-        for (int i = 0; i < scene->sys_len; i++) {
-            scene->systems[i]->system(scene->entities[y], w, dt);
+    if (!scene)
+        return;
+    for (tmp = scene->entities; tmp; tmp = tmp->next) {
+        for (sys = scene->systems; sys; sys = sys->next) {
+            ((dg_system_t *)(sys->data))->system(tmp->data, w, dt);
         }
-        sp_component = dg_entity_has_component(scene->entities[y], "sprite");
+        sp_component = dg_entity_has_component(tmp->data, "sprite");
         if (sp_component >= 0) {
-            sprite = (sfSprite *)(dg_entity_get_component(scene->entities[y],
+            sprite = (sfSprite *)(dg_entity_get_component(tmp->data,
                 "sprite"));
             sfRenderWindow_drawSprite(w->window, sprite, NULL);
         }

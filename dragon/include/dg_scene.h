@@ -16,10 +16,8 @@
 typedef struct dg_scene
 {
     sfVector2f camera;
-    dg_entity_t **entities;
-    unsigned int ent_len;
-    dg_system_t **systems;
-    unsigned int sys_len;
+    dg_array_t *entities;
+    dg_array_t *systems;
 } dg_scene_t;
 
 dg_scene_t *dg_scene_create();
