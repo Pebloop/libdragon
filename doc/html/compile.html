@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../css/global.css" />
+    <link href="../themes/prism.css" rel="stylesheet" />
+    <script src="../themes/prism.js"></script>
   </head>
 
   <body>
@@ -22,11 +24,7 @@
    <section>
     <h1>Compile</h1>
     <p>Here's how to compile the LIBDRAGON. Do not hesitate to create a Makefile !</p>
-    <ul>
-      <li>With the shell (GCC) :
-        <ol class="block"><li>gcc -o $(NAME) $(C FILES) -Iinclude -Llib/dragon/ -ldragon -lcsfml-graphics</li></ol>
-      </li>
-    </ul>
+    <pre><code class="lang-c line-numbers">gcc -o $(NAME) $(C FILES) -Iinclude -Llib/dragon/ -ldragon -lcsfml-graphics</code></pre>
   </section>
   </body>
 </html>

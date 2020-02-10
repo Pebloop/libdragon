@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
     <title>libdragon</title>
     <link rel="stylesheet" href="../css/global.css" />
     <link href="../themes/prism.css" rel="stylesheet" />
     <script src="../themes/prism.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
 	<header>
-    <div>
-      <a href="../../index.html" class="logo">
-        <img src="../res/logo.png"  alt="logo" width="3%" class="float"/>
-        LIBDRAGON
-      </a>
-      <a href="download.html" class="menu">Download</a>
-      <a href="tutorial.html" class="menu">Tutorial</a>
-      <a href="CFiles.html" class="menu">C Files</a>
-      <a href="HFiles.html" class="menu">H Files</a>
+        <div>
+          <a href="../../index.html" class="logo">
+            <img src="../res/logo.png"  alt="logo" width="3%" class="float"/>
+            LIBDRAGON
+        </a>
+        <a href="download.html" class="menu">Download</a>
+        <a href="tutorial.html" class="menu">Tutorial</a>
+        <a href="CFiles.html" class="menu">C Files</a>
+        <a href="HFiles.html" class="menu">H Files</a>
     </div>
-	</header>
-  <section>
+</header>
+<section>
     <h1>Tutorial</h1>
     <p>Before reading the tutorial, check the <a href="download.html">Download</a>, <a href="install.html">Install</a> and <a href="compile.html">Compile</a> pages.</p>
     <div class="part">
-    <h2>main function</h2>
-    <p>To use the libdragon, you'll need to create the dg_init, dg_loop and dg_end functions.<br />
-    Use the dg_play function to create a new window.</p>
+            <h2>main function</h2>
+            <p>To use the libdragon, you'll need to create the dg_init, dg_loop and dg_end functions.<br />
+            Use the dg_play function to create a new window.</p>
 
-<pre><code class="lang-c line-numbers">#include "libdragon.h"
+            <pre><code class="lang-c line-numbers">#include "libdragon.h"
 
 void *dg_init(dg_window_t *window)
 {
@@ -46,31 +46,31 @@ void dg_end(void *var, int id)
     return 0;
 }
 
-
 int main(void)
 {
     dg_play(1920, 1080, "LibDragon", 0);
 }</code></pre>
-  </div>
-  <div class="part">
-    <h2>the grid framebuffer</h2>
-    <p>The grid framebuffer has the window size and can be modified without the loop reseting it.<br />
-    Go to the framebuffer_t page to know how to use them.</p>
-    <pre><code class="lang-c line-numbers">int dg_loop(dg_window_t *w, void *var, sfTime dt)
+    <p><a href="tutorial/main_functions.html">Click here for more informations</a></p>
+        </div>
+        <div class="part">
+            <h2>the grid framebuffer</h2>
+            <p>The grid framebuffer has the window size and can be modified without the loop reseting it.<br />
+            Go to the framebuffer_t page to know how to use them.</p>
+            <pre><code class="lang-c line-numbers">int dg_loop(dg_window_t *w, void *var, sfTime dt)
 {
     sfVector2u vector = {20, 20};
 
     draw_square(w->fb, vector, 200, sfBlue);
     return 0;
 }
-</code></pre>
-  </div>
-    <div class="part">
-    <h2>the Animator</h2>
-    <p>The animator is a struct of animation.<br />
-    You can use it to generate animations and change the animations very easely!.<br />
-You just have to create spritesheets, create animations, set the animation and add the animations to the animation and give them a name!</p>
-    <pre><code class="lang-c line-numbers">static dg_animator_t *set_player_animator(void)
+            </code></pre>
+        </div>
+        <div class="part">
+            <h2>the Animator</h2>
+            <p>The animator is a struct of animation.<br />
+                You can use it to generate animations and change the animations very easely!.<br />
+            You just have to create spritesheets, create animations, set the animation and add the animations to the animation and give them a name!</p>
+            <pre><code class="lang-c line-numbers">static dg_animator_t *set_player_animator(void)
 {
     dg_animator_t *animator = dg_animator_create();
     dg_spritesheet_t *ss = dg_spritesheet_create("res/bat.png", 32, 32);
@@ -106,17 +106,17 @@ You just have to create spritesheets, create animations, set the animation and a
 
     return animator;
 }
-</code></pre>
-  </div>
-  <div class="part">
-    <h2>the ECS</h2>
-    <p>The ECS is an architecture made of systems, entities, components and scenes.<br /><br />
-        Components : simples variables<br />
-        Entities : group of components<br />
-        Systems : functions that affect the components<br />
-        Scene : a scene (ex : menu, game, ...)<br /><br />
-    </p>
-    <pre><code class="lang-c line-numbers">typedef struct data {
+            </code></pre>
+        </div>
+        <div class="part">
+            <h2>the ECS</h2>
+            <p>The ECS is an architecture made of systems, entities, components and scenes.<br /><br />
+                Components : simples variables<br />
+                Entities : group of components<br />
+                Systems : functions that affect the components<br />
+                Scene : a scene (ex : menu, game, ...)<br /><br />
+            </p>
+            <pre><code class="lang-c line-numbers">typedef struct data {
     dg_scene_t *scene_game;
 } data_t;
 
@@ -149,14 +149,14 @@ void dg_end(void *var, int id)
 
     dg_scene_destroy(v->scene_game);
 }</code></pre>
-  </div>
-   <div class="part">
-    <h2>the Components</h2>
-    <p>The component are just variables or structures.<br />
-        You have to create a function to free it and one to create it.<br />
-        You'll also have to name it.<br />
-    </p>
-    <pre><code class="lang-c line-numbers">static void component_destroy(void *data)
+        </div>
+        <div class="part">
+            <h2>the Components</h2>
+            <p>The component are just variables or structures.<br />
+                You have to create a function to free it and one to create it.<br />
+                You'll also have to name it.<br />
+            </p>
+            <pre><code class="lang-c line-numbers">static void component_destroy(void *data)
 {
     sfVector2f *pos = (sfVector2f *)(data);
 
@@ -175,47 +175,47 @@ dg_component_t *dg_cpt_pos(int x, int y)
     component = dg_component_create("pos", pos, destroy);
     return component;
 }</code></pre>
-  </div>
-    </div>
-   <div class="part">
-    <h2>the Entities</h2>
-    <p>The entities are group of Components.<br />
-        You have to add the components it contains and name it<br />
-    </p>
-    <pre><code class="lang-c line-numbers">dg_entity_t *dg_ent_camera(int x, int y)
+            </div>
+        </div>
+        <div class="part">
+            <h2>the Entities</h2>
+            <p>The entities are group of Components.<br />
+                You have to add the components it contains and name it<br />
+            </p>
+            <pre><code class="lang-c line-numbers">dg_entity_t *dg_ent_camera(int x, int y)
 {
     dg_entity_t *entity = dg_entity_create("camera");
 
     dg_entity_add_component(entity, dg_cpt_pos(x, y));
     return entity;
 }</code></pre>
-  </div>
-   <div class="part">
-    <h2>the Systems</h2>
-    <p>The Systems are functions that interact with the components.<br />
-        It can render a sprite, move an object, change a text, ...<br />
-        Use the "dg_system_require" function to impact only the entities with the good components!<br />
-    </p>
-    <pre><code class="lang-c line-numbers">void dg_sys_animator(dg_entity_t *entity, dg_window_t *w,
-    dg_array_t **entities, sfTime dt)
+            </div>
+            <div class="part">
+                <h2>the Systems</h2>
+                <p>The Systems are functions that interact with the components.<br />
+                    It can render a sprite, move an object, change a text, ...<br />
+                    Use the "dg_system_require" function to impact only the entities with the good components!<br />
+                </p>
+                <pre><code class="lang-c line-numbers">void dg_sys_animator(dg_entity_t *entity, dg_window_t *w,
+dg_array_t **entities, sfTime dt)
 {
     dg_animator_t *animator = (dg_animator_t *)
-        (dg_entity_get_component(entity, "animator"));
+    (dg_entity_get_component(entity, "animator"));
     sfSprite *sprite = (sfSprite *)(dg_entity_get_component(entity, "sprite"));
 
     if (!dg_system_require(entity, 2, "animator", "sprite"))
-        return;
+    return;
     dg_animator_update_sprite(animator, sprite, dt.microseconds);
 }</code></pre>
-  </div>
-  <div class="part">
-    <h2>the Scene</h2>
-    <p>The Scenes are parts of the game.<br />
-        They contains all the entities and systems.<br />
-        They can be menu or game_scene<br />
-        You'll need to add all the entities and system as below.<br />
-    </p>
-    <pre><code class="lang-c line-numbers">dg_scene_t *scene_game_create(char *filepath)
+                </div>
+                <div class="part">
+                    <h2>the Scene</h2>
+                    <p>The Scenes are parts of the game.<br />
+                        They contains all the entities and systems.<br />
+                        They can be menu or game_scene<br />
+                        You'll need to add all the entities and system as below.<br />
+                    </p>
+                    <pre><code class="lang-c line-numbers">dg_scene_t *scene_game_create(char *filepath)
 {
     dg_scene_t *scene_game = dg_scene_create("game");
 
@@ -232,14 +232,13 @@ dg_component_t *dg_cpt_pos(int x, int y)
     dg_scene_add_sys(scene_game, dg_system_create(&system_display_text));
     return scene_game;
 }</code></pre>
-  </div>
-  <div class="part">
-    <h2><a href="https://www.sfml-dev.org">CSFML</a></h2>
-    <p>libdragon is an overlay of <a href="https://www.sfml-dev.org">CSFML</a> and every functions of <a href="https://www.sfml-dev.org">CSFML</a> can be used with libdragon.<br />
-      Moreover you don't need to include <a href="https://www.sfml-dev.org">CSFML</a> in your c file, libdragon.h already do it, but you need to compile with <a href="https://www.sfml-dev.org">CSFML</a>.<br />
-      Go to the <a href="compile.html">compile page</a> to get more information.</p>
-    </div>
-
-  </section>
-  </body>
+                    </div>
+                    <div class="part">
+                        <h2><a href="https://www.sfml-dev.org">CSFML</a></h2>
+                        <p>libdragon is an overlay of <a href="https://www.sfml-dev.org">CSFML</a> and every functions of <a href="https://www.sfml-dev.org">CSFML</a> can be used with libdragon.<br />
+                          Moreover you don't need to include <a href="https://www.sfml-dev.org">CSFML</a> in your c file, libdragon.h already do it, but you need to compile with <a href="https://www.sfml-dev.org">CSFML</a>.<br />
+                      Go to the <a href="compile.html">compile page</a> to get more information.</p>
+            </div>
+        </section>
+    </body>
 </html>

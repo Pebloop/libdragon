@@ -40,8 +40,11 @@ SRC_RD =		src/elements/rendering/dg_spritesheet.c			\
 
 SRC_ECS_STC =	src/ecs/struct/dg_component.c					\
 				src/ecs/struct/dg_entity.c						\
+				src/ecs/struct/dg_entity_two.c					\
 				src/ecs/struct/dg_system.c						\
 				src/ecs/struct/dg_scene.c						\
+				src/ecs/struct/dg_scene_sys.c					\
+				src/ecs/struct/dg_scene_ent.c					\
 
 SRC_ECS_S =		src/ecs/systems/dg_sys_animator.c				\
 				src/ecs/systems/dg_sys_render.c					\

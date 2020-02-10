@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+</head>
+
+<body>
+    <header>
+        <div>
+          <a href="../../../index.html" class="logo">
+            <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+            LIBDRAGON
+        </a>
+        <a href="../download.html" class="menu">Download</a>
+        <a href="../tutorial.html" class="menu">Tutorial</a>
+        <a href="../CFiles.html" class="menu">C Files</a>
+        <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+</header>
+<section>
+    <h1>Tutorial : main functions</h1>
+    <p>You are following a tutorial that teach you the basics of LIBDRAGON. You'll learn how to create a window and use it.</p>
+    <div class="part">
+            <h2>launch a window</h2>
+            <p>With LIBDRAGON, creating a window is really easy just use the dg_play function :</p>
+
+            <pre><code class="lang-c line-numbers">#include "libdragon.h"
+
+int main(void)
+{
+    dg_play(1920, 1080, "LibDragon", 200);
+    return 0;
+}</code></pre>
+            <p>DO NOT forget to include the libdragon !<br />
+            Here are the parameters :
+            <ol>
+            <li>1920  :  width of the window, in pixels</li>
+            <li>1080  :  height of the window, in pixels</li>
+            <li>"libDragon"  :  the name of the window, displayed on the bar.</li>
+            <li>200  :  the ID of the window, usefull to distinguish one from another.</li>
+            </ol>
+        If you try the code,you'll get undefined references ! You need to add 3 functions :
+            <ul>
+            <li>dg_init</li>
+            <li>dg_loop</li>
+            <li>dg_end</li>
+            </ul>
+        You can add them empty to try your code, those functions will be explained later on :</p>
+        <pre><code class="lang-c line-numbers">#include "libdragon.h"
+
+void *dg_init(dg_window_t *w)
+{
+    return 0;
+}
+
+int dg_loop(dg_window_t *w, void *data, sfTime dt)
+{
+    return 0;
+}
+
+void dg_end(void *data, int id)
+{
+}
+
+int main(void)
+{
+    dg_play(1920, 1080, "LibDragon", 200);
+    return 0;
+}</code></pre>
+    <p> You can now try the code !</p>
+        </div>
+<div class="part">
+            <h2>init the window</h2>
+            <p>dg_init is a function executed before launching the window, only once. Use it to create variables and load ressources ! <br />
+            Here is the prototype :</p>
+
+            <pre><code class="lang-c line-numbers">void *dg_init(dg_window_t *w);</code></pre>
+    <p> The init function take a dg_window_t *. <br />
+    Here is the structure :</p>
+    <pre><code class="lang-c line-numbers">typedef struct dg_window
+{
+    sfRenderWindow *window;
+    dg_framebuffer_t *fb;
+    int id;
+
+} dg_window_t;</code></pre>
+<p>As you can see, the dg_window_t contain a sfRenderWindow wich can be used to get, or set data about the window (check the CSFML lib for more information). <br /> <br />
+There is also a dg_framebuffer_t, check the framebuffer tutorial for more information.<br /> <br />
+Finally, there is the ID, use it to act differently with your windows.<br /><br />
+You can use all of those data to initialize your window.<br /><br /><br /><br />
+The dg_init function return a void *, wich mean any pointer : the data returned will be passed to the dg_loop function.<br />
+The best way to pass data is to create a structure with all your data and return it.<br /><br />
+Let's try out !</p>
+<pre><code class="lang-c line-numbers">typedef struct data {
+    int circle_size;
+    int pos_x;
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *data = malloc(sizeof(data_t));
+
+    data->circle_size = w->id;
+    data->pos_x = 0;
+    return data;
+}</code></pre>
+<p> With this code, the int circle_size and the int pos_x will be passed to the window loop throught the data structure.<br /></p>
+        </div>
+<div class="part">
+            <h2>loop the window</h2>
+            <p>dg_loop is a function executed in loop as long as the window is open.<br />
+            Use it to put your main program.<br />
+            Here is the prototype :</p>
+
+            <pre><code class="lang-c line-numbers">int dg_loop(dg_window_t *w, void *data, sfTime dt);</code></pre>
+    <p> The loop function take a dg_window_t *. We already covered it before.<br /><br />
+
+    Next is the data passed with the init function.<br /><br />
+Finally is deltaTime, or the time passed between two loop/frames.<br /><br />
+Let's draw a moving circle :<br /></p>
+<pre><code class="lang-c line-numbers">int dg_loop(dg_window_t *w, void *data, sfTime dt)
+{
+    data_t *d = (data_t *)(data);
+    dg_fb_putrectangle(w->fb, (sfVector2u){0}, (sfVector2u){1920, 1080}, sfBlack);
+    dg_fb_putcircle(w->fb, (sfVector2u){d->pos_x, 540}, d->circle_size, sfWhite);
+    d->pos_x += dt.microseconds / 4000;
+    return 0;
+}</code></pre>
+<div class="part">
+            <h2>end the window</h2>
+            <p>dg_end is a function executed at the end, after the window has been closed.<br />
+            Use it to destroy your variables.<br />
+            Here is the prototype :</p>
+
+            <pre><code class="lang-c line-numbers">void dg_end(void *data, int id);</code></pre>
+    <p> The end function take the data passed by init and the id of the window.<br /><br />
+Let's free what we used :<br /></p>
+<pre><code class="lang-c line-numbers">void dg_end(void *data, int id)
+{
+    free(data);
+}</code></pre>
+<p>Done, your data are all freed !<br /></p>
+        </div>
+<div class="part">
+            <h2>The whole program</h2>
+            <pre><code class="lang-c line-numbers">#include <stdlib.h>
+#include "libdragon.h"
+
+typedef struct data {
+    int circle_size;
+    int pos_x;
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *data = malloc(sizeof(data_t));
+
+    data->circle_size = w->id;
+    data->pos_x = 0;
+    return data;
+}
+
+int dg_loop(dg_window_t *w, void *data, sfTime dt)
+{
+    data_t *d = (data_t *)(data);
+
+    dg_fb_putrectangle(w->fb, (sfVector2u){0}, (sfVector2u){1920, 1080}, sfBlack);
+    dg_fb_putcircle(w->fb, (sfVector2u){d->pos_x, 540}, d->circle_size, sfWhite);
+    d->pos_x += dt.microseconds / 4000;
+    return 0;
+}
+
+void dg_end(void *data, int id)
+{
+    free(data);
+}
+
+int main(int argc, char **argv)
+{
+    dg_play(1920, 1080, "LibDragon", 200);
+    return 0;
+}</code></pre>
+</div>
+</section>
+    </body>
+</html>

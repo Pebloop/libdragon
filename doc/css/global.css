@@ -89,13 +89,6 @@ section
 	float:left;
 }
 
-ol
-{
-	list-style: none;
-	counter-reset: li;
-	color: #000000;
-}
-
 li::before
 {
 	content: counter(li) "|";
