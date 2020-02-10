@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+</head>
+
+<body>
+    <header>
+        <div>
+          <a href="../../../index.html" class="logo">
+            <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+            LIBDRAGON
+        </a>
+        <a href="../download.html" class="menu">Download</a>
+        <a href="../tutorial.html" class="menu">Tutorial</a>
+        <a href="../CFiles.html" class="menu">C Files</a>
+        <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+</header>
+<section>
+    <h1>Tutorial : animate</h1>
+    <p>You are following a tutorial that teach you the animation with LIBDRAGON. You'll learn how to create an animator and use it.</p>
+    <div class="part">
+            <h2>Use a spritesheet</h2>
+            <p>With LIBDRAGON, load a spritesheet is really easy.<br /></p>
+
+            <pre><code class="lang-c line-numbers">typedef struct data {
+    dg_spritesheet_t *ss;
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *data = malloc(sizeof(data_t));
+
+    data->ss = dg_spritesheet_create("res/bat.png", 32, 32);
+    return data;
+}</code></pre>
+            <p>Here are the parameters :
+            <ol>
+            <li>"res/bat.png"  :  the path to the spritesheet (.png, .jpeg, .bmp)</li>
+            <li>32  :  width of a tile, in pixels</li>
+            <li>32  :  height of a tile, in pixels</li>
+            </ol>
+        Now let's use your spritesheet :</p>
+        <pre><code class="lang-c line-numbers">int dg_loop(dg_window_t *w, void *data, sfTime dt)
+{
+    data_t *d = (data_t *)(data);
+    sfSprite *sprite = sfSprite_create();
+
+    sfRenderWindow_clear(w->window, sfBlack);
+    dg_spritesheet_to_sprite(d->ss, sprite, 0);
+    sfRenderWindow_drawSprite(w->window, sprite, NULL);
+    sfSprite_destroy(sprite);
+    return 0;
+}</code></pre>
+    <p> How does it works : <br />
+        <ol>
+            <li>d->ss  :  the spritesheet</li>
+            <li>sprite  :  the sprtie wich take the texture</li>
+            <li>0  :  the id of your tile</li>
+        </ol>
+        You should see your tile appear. Note that the id of your tile is defined as : <br />
+        <ul>
+            <li>The top left is 0</li>
+            <li>You continue on the right until the end of the spritesheet</li>
+            <li>you go on the line beside at the left and begin again</li>
+            <li>the last id is the tile bottom right</li>
+        </ul>
+        This way the spritesheet is really easy to use but need to be done correctly and every tiles need to have the same size.<br /><br />
+        Finally, let's destroy the spritesheet :<br /></p>
+        <pre><code class="lang-c line-numbers">void dg_end(void *data, int id)
+{
+    data_t *d = (data_t *)(data);
+
+    dg_spritesheet_free(d->ss);
+    free(data);
+}</code></pre>
+        </div>
+        <div class="part">
+            <h2>Animation</h2>
+            <p>Now let's combine the tiles to make an animation.<br />
+            First, you'll need to create the animation.</p>
+
+            <pre><code class="lang-c line-numbers">typedef struct data {
+    dg_spritesheet_t *ss;
+    dg_animation_t *animation;
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *data = malloc(sizeof(data_t));
+
+    data->ss = dg_spritesheet_create("res/bat.png", 32, 32);
+    data->animation = dg_animation_create(data->ss, 10);
+    dg_animation_add(data->animation, 1);
+    dg_animation_add(data->animation, 2);
+    dg_animation_add(data->animation, 3);
+    return data;
+}</code></pre>
+            <p>parameters of dg_animation_create:
+            <ol>
+            <li>data->ss  :  the spritesheet to use</li>
+            <li>10  :  speed of the animation (the highter, the faster)</li>
+            </ol>
+            parameters of dg_animation_add:
+            <ol>
+            <li>data->animation  :  the animation to change</li>
+            <li>1 / 2 / 3  :  the id of the tile used for the animation</li>
+            </ol>
+        It's easy ! First you create an animation by choosing the spritesheet and the speed, then you add the frames of your animation ! <br /><br />
+    Now let's use our new animation. First we need a float to manage the time (called i here) :</p>
+        <pre><code class="lang-c line-numbers">typedef struct data {
+    dg_spritesheet_t *ss;
+    dg_animation_t *animation;
+    float i;
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *data = malloc(sizeof(data_t));
+
+    data->ss = dg_spritesheet_create("res/bat.png", 32, 32);
+    data->animation = dg_animation_create(data->ss, 10);
+    dg_animation_add(data->animation, 1);
+    dg_animation_add(data->animation, 2);
+    dg_animation_add(data->animation, 3);
+    data->i = 0;
+    return data;
+}</code></pre>
+    <p> Now, let's animate ! <br /></p>
+        <pre><code class="lang-c line-numbers">int dg_loop(dg_window_t *w, void *data, sfTime dt)
+{
+    data_t *d = (data_t *)(data);
+
+    sfSprite *sprite = sfSprite_create();
+
+    sfRenderWindow_clear(w->window, sfBlack);
+    dg_animation_update_sprite(d->animation, sprite, ((int)(d->i)));
+    sfRenderWindow_drawSprite(w->window, sprite, NULL);
+    d->i += dt.microseconds / 1000000.0 * d->animation->speed;
+    sfSprite_destroy(sprite);
+    return 0;
+}</code></pre>
+<p>parameters of dg_animation_update_sprite:
+            <ol>
+            <li>d->animation  :  the animation to use</li>
+            <li>sprite  :  sprite to apply the animation to</li>
+            <li>((int)(d->i))  :  time, in int</li>
+            </ol>
+        As you can see, the time is not managed by the animation. But we will now see a structure that, not only does manage the time himself, but also manage more than one animation !</p>
+        </div>
+                <div class="part">
+            <h2>Animator</h2>
+            <p>Let's add an animation to use the animator.<br /></p>
+
+            <pre><code class="lang-c line-numbers">typedef struct data {
+    dg_spritesheet_t *ss;
+    dg_animation_t *animation;
+    dg_animation_t *animation2;
+    float i;
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *data = malloc(sizeof(data_t));
+
+    data->ss = dg_spritesheet_create("res/bat.png", 32, 32);
+    data->animation = dg_animation_create(data->ss, 10);
+    data->animation2 = dg_animation_create(data->ss, 10);
+
+    dg_animation_add(data->animation, 1);
+    dg_animation_add(data->animation, 2);
+    dg_animation_add(data->animation, 3);
+
+    dg_animation_add(data->animation, 5);
+    dg_animation_add(data->animation, 6);
+    dg_animation_add(data->animation, 7);
+
+    data->i = 0;
+    return data;
+}</code></pre>
+            <p>Now, let's manage them with an animator :</p>
+        <pre><code class="lang-c line-numbers">typedef struct data {
+    dg_spritesheet_t *ss;
+    dg_animation_t *animation;
+    dg_animation_t *animation2;
+    dg_animator_t *animator;
+    float i;
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *data = malloc(sizeof(data_t));
+
+    data->ss = dg_spritesheet_create("res/bat.png", 32, 32);
+    data->animation = dg_animation_create(data->ss, 10);
+    data->animation2 = dg_animation_create(data->ss, 10);
+    data->animator = dg_animator_create();
+
+    dg_animation_add(data->animation, 1);
+    dg_animation_add(data->animation, 2);
+    dg_animation_add(data->animation, 3);
+
+    dg_animation_add(data->animation, 5);
+    dg_animation_add(data->animation, 6);
+    dg_animation_add(data->animation, 7);
+
+    dg_animator_add(data->animator, "first", data->animation);
+    dg_animator_add(data->animator, "second", data->animation2);
+
+    data->i = 0;
+    return data;
+}</code></pre>
+    <p>parameters of dg_animation_add:
+            <ol>
+            <li>data->animator  :  the animator to change</li>
+            <li>"first" / "second"  :  the key of the animation to differentiate from others</li>
+            <li>data->animation  :  the animation to add</li>
+            </ol>
+            You can add as many animation as you want.<br />
+     Now, let's animate ! <br /></p>
+        <pre><code class="lang-c line-numbers">int dg_loop(dg_window_t *w, void *data, sfTime dt)
+{
+    data_t *d = (data_t *)(data);
+
+    sfSprite *sprite = sfSprite_create();
+
+    sfRenderWindow_clear(w->window, sfBlack);
+    dg_animator_update_sprite(d->animator, sprite, dt.microseconds);
+    sfRenderWindow_drawSprite(w->window, sprite, NULL);
+    d->i += dt.microseconds / 100000.0;
+    if (d->i > 50)
+        dg_animator_set_animation(d->animator, "second");
+    sfSprite_destroy(sprite);
+    return 0;
+}</code></pre>
+<p>parameters of dg_animator_update_sprite:
+            <ol>
+            <li>d->animator  :  the animator to use</li>
+            <li>sprite  :  sprite to apply the animation to</li>
+            <li>dt.microseconds  :  timelapse, or deltatime</li>
+            </ol>
+    parameters of dg_animator_set_animation:
+            <ol>
+            <li>d->animator  :  the animator to change</li>
+            <li>"second"  :  key/name of the animation</li>
+            </ol><br />
+        Now you know how to animate with LIBDRAGON !</p>
+        </div>
+        <div class="part">
+            <h2>Full code</h2>
+            <pre><code class="lang-c line-numbers">#include <stdlib.h>
+#include "libdragon.h"
+
+typedef struct data {
+    dg_spritesheet_t *ss;
+    dg_animation_t *animation;
+    dg_animation_t *animation2;
+    dg_animator_t *animator;
+    float i;
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *data = malloc(sizeof(data_t));
+
+    data->ss = dg_spritesheet_create("res/bat.png", 32, 32);
+    data->animation = dg_animation_create(data->ss, 10);
+    data->animation2 = dg_animation_create(data->ss, 10);
+    data->animator = dg_animator_create();
+
+    dg_animation_add(data->animation, 1);
+    dg_animation_add(data->animation, 2);
+    dg_animation_add(data->animation, 3);
+
+    dg_animation_add(data->animation2, 5);
+    dg_animation_add(data->animation2, 6);
+    dg_animation_add(data->animation2, 7);
+
+    dg_animator_add(data->animator, "first", data->animation);
+    dg_animator_add(data->animator, "second", data->animation2);
+
+    data->i = 0;
+    return data;
+}
+
+int dg_loop(dg_window_t *w, void *data, sfTime dt)
+{
+    data_t *d = (data_t *)(data);
+
+    sfSprite *sprite = sfSprite_create();
+
+    sfRenderWindow_clear(w->window, sfBlack);
+    dg_animator_update_sprite(d->animator, sprite, dt.microseconds);
+    sfRenderWindow_drawSprite(w->window, sprite, NULL);
+    d->i += dt.microseconds / 100000.0;
+    if (d->i > 50)
+        dg_animator_set_animation(d->animator, "second");
+    sfSprite_destroy(sprite);
+    return 0;
+}
+
+void dg_end(void *data, int id)
+{
+    data_t *d = (data_t *)(data);
+
+    dg_spritesheet_free(d->ss);
+    dg_animator_free(d->animator);
+    free(data);
+}
+
+int main(int argc, char **argv)
+{
+    dg_play(1920, 1080, "LibDragon", 200);
+    return 0;
+}
+</code></pre>
+        </div>
+</section>
+    </body>
+</html>
