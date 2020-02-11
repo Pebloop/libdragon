@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>libdragon</title>
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link href="../../themes/prism.css" rel="stylesheet" />
+    <script src="../../themes/prism.js"></script>
+</head>
+
+<body>
+    <header>
+        <div>
+          <a href="../../../index.html" class="logo">
+            <img src="../../res/logo.png"  alt="logo" width="3%" class="float"/>
+            LIBDRAGON
+        </a>
+        <a href="../download.html" class="menu">Download</a>
+        <a href="../tutorial.html" class="menu">Tutorial</a>
+        <a href="../CFiles.html" class="menu">C Files</a>
+        <a href="../HFiles.html" class="menu">H Files</a>
+    </div>
+</header>
+<section>
+    <h1>Tutorial : the whole ECS tutorial !</h1>
+    <p>You are following a tutorial that teach you the ECS implementation of LIBDRAGON.</p>
+    <div class="part">
+            <h2>What is an ECS ?</h2>
+            <p>ECS mean "Entity Component System".<br />
+                It's a structure that link those three concepts into a scene.<br />
+            How ?
+            <ul>
+            <li>Scenes contain Entities and systems</li>
+            <li>Entities contain components</li>
+            <li>Systems act on components</li>
+            </ul>
+            It may look blurry right now, so let's use an example.<br /><br />
+            <ul>
+            <li>Scenes are like parts of your games : there is a menu, a map, an inventory, a game scene, .... <br />Each of them are one scene.</li>
+            <li>Entities are like objects : a character, a table, a chest, a background.</li>
+            <li>Components are like part of an object : text, image, animation, animator, sound, speed, position, ...</li>
+            <li>systems are like events: gravity, collision, movement, player controller, rendering, ...</li>
+            </ul>
+            As you can see, the ECS is an object oriented system. Now that you have a better understanding of ECS, let's begin to use it.<br /><br />
+            Note: Component, Entity, Systems and Scenes are functions, but you should think of them has objects/events.
+            </p>
+        </div>
+<div class="part">
+            <h2>Create a component</h2>
+            <p>We'll begin by creating a simple component. Here's a template :</p>
+
+            <pre><code class="lang-c line-numbers">static void component_destroy(void *data)
+{
+    /*Free the component (data)*/
+}
+
+dg_component_t *cpt_/*name*/(/*Arguments that set the components*/)
+{
+    void (*destroy)(void *) = &component_destroy;
+    /*initialize data*/
+    dg_component_t *component = NULL;
+
+    /*changes on data*/
+    component = dg_component_create(/*name*/, /*data*/, destroy);
+    return component;
+}</code></pre>
+    <p> Here's an example :</p>
+    <pre><code class="lang-c line-numbers">//This function destroy the component to avoid leaks
+//the data of your component will be passed throught when the component will be destroyed
+static void component_destroy(void *data)
+{
+    sfVector2f *pos = (sfVector2f *)(data); //we cast the void* into the good type
+
+    free(pos); //we free the data
+}
+
+//This function is the component itself, here, a position,
+//you can pass an x and a y to initialize the position.
+//concretely, you just create a variable "dg_component_t *"
+//and "specialize" it with the function
+//by setting a specific name, data and destroyer.
+dg_component_t *dg_cpt_pos(int x, int y)
+{
+    void (*destroy)(void *) = &component_destroy; //set the destroy function pointer
+    sfVector2f *pos = 0; //initialize the position variable
+    dg_component_t *component = NULL; //init the component
+
+    pos = malloc(sizeof(sfVector2f)); //allocate the vector
+    pos->x = x;
+    pos->y = y;
+    component = dg_component_create("pos", pos, destroy); //create the component
+    return component;
+}</code></pre>
+<p>Once done, you can add it to the entity. Alone, a component is often useless, maybe meaningless, but together they'll become powerfull.<br />
+Do not hesitate to use the prefab components and create your own !</p>
+        </div>
+<div class="part">
+            <h2>Create an entity</h2>
+            <p>Now that we have components, we need to group them with an entity, so let's create one :</p>
+
+            <pre><code class="lang-c line-numbers">dg_entity_t *ent_/*name*/(/*Arguments that set the entity*/)
+{
+    dg_entity_t *entity = dg_entity_create(/*name*/);
+
+    dg_entity_add_component(entity, /*component*/);
+    dg_entity_add_component(entity, /*component*/);
+    dg_entity_add_component(entity, /*component*/);
+    /*...*/
+    return entity;
+}</code></pre>
+    <p>Here's an example :</p>
+<pre><code class="lang-c line-numbers">//As for the component, this function is the entity itself
+//here we create a player.
+dg_entity_t *ent_player(sfVector2f scale)
+{
+    dg_entity_t *player = dg_entity_create("player"); //create entity
+
+    dg_entity_add_component(player, dg_cpt_sprite((&scale)); //add a sprite component
+    dg_entity_add_component(player, dg_cpt_animator(&set_player_animator)); //add an animator component
+    return player;
+}</code></pre>
+</div>
+<div class="part">
+            <h2>Create a system</h2>
+            <p>Systems are the most complicated parts of the ECS.<br />
+                They are what make your program more than a window and dynamics.<br />
+            Here how to create one :</p>
+
+            <pre><code class="lang-c line-numbers">void sys_/*name*/(dg_entity_t *entity, dg_window_t *w,
+    dg_array_t **entities, sfTime dt)
+{
+    /*init component's data variables*/
+
+    if (!dg_system_require(entity, /*nb of cpts*/, /*first cpt*/, /*second cpt*/, /*...*/))
+        return;
+    /*act on components*/
+}</code></pre>
+    <p>Here's an example :</p>
+<pre><code class="lang-c line-numbers">//As before this function is a system.
+//here, it manage the animator component
+//Here are the parameter of an animator :
+// entity : the entity the system is applyed on :
+// The system will be called for EACH entities of the scene, one by one.
+// w : the window
+// entities : the linked_list of all the entities of the scene.
+// dt : deltatime, or timelapse between two frames
+void dg_sys_animator(dg_entity_t *entity, dg_window_t *w,
+    dg_array_t **entities, sfTime dt)
+{
+    dg_animator_t *animator = (dg_animator_t *)(dg_entity_get_component(entity, "animator")); //get the animator
+    sfSprite *sprite = (sfSprite *)(dg_entity_get_component(entity, "sprite")); //get the sprite
+
+    //this function check if the entity contain the asked components;
+    //here we verify that it is the  case.
+    //If not, then this system doesn't concern the actual entity.
+    if (!dg_system_require(entity, 2, "animator", "sprite")) //require animator and sprite
+        return;
+    dg_animator_update_sprite(animator, sprite, dt.microseconds); //launch the animator manager
+}</code></pre>
+</div>
+<div class="part">
+            <h2>Create a scene</h2>
+            <p>Scenes are what warp everything together.<br />
+                They just contains everything so far<br />
+            Here how to create one :</p>
+
+            <pre><code class="lang-c line-numbers">dg_scene_t *sce_/*name*/(/*arguments*/)
+{
+    dg_scene_t *scene = dg_scene_create(/*name*/);
+
+    dg_scene_add_ent(scene, /*entity*/);
+    dg_scene_add_ent(scene, /*entity*/);
+    dg_scene_add_ent(scene, /*entity*/);
+    /*...*/
+    dg_scene_add_sys(scene, dg_system_create(/*system*/));
+    dg_scene_add_sys(scene, dg_system_create(/*system*/));
+    dg_scene_add_sys(scene, dg_system_create(/*system*/));
+    /*...*/
+    return scene;
+}</code></pre>
+    <p>Here's an example :</p>
+<pre><code class="lang-c line-numbers">dg_scene_t *sce_game(char *filepath)
+{
+    dg_scene_t *scene_game = dg_scene_create("game"); //create a scene named "game"
+
+    dg_scene_add_ent(scene_game, entity_parallax_create()); //add parallax
+    dg_scene_add_ent(scene_game, entity_camera_create()); //add camera
+    load_map(scene_game, filepath); //this function set a map automatically
+    dg_scene_add_ent(scene_game, entity_player_create()); //add player
+    dg_scene_add_ent(scene_game, entity_music_create("res/ost.ogg")); //add music theme
+    dg_scene_add_sys(scene_game, dg_system_create(&system_parallax)); //add parallax system
+    dg_scene_add_sys(scene_game, dg_system_create(&system_player_control)); //add player control system
+    dg_scene_add_sys(scene_game, dg_system_create(&system_player_animator)); //add animator
+    dg_scene_add_sys(scene_game, dg_system_create(&system_camera_sp_render)); //add camera renderer
+    dg_scene_add_sys(scene_game, dg_system_create(&system_hud_sp_render)); //add hud renderer
+    dg_scene_add_sys(scene_game, dg_system_create(&system_display_text)); //add text renderer
+    return scene_game;
+}</code></pre>
+<p> You see ? Easy, you just have to add everything you created before in the scene<br /><br />
+Now that everything is set, one thing remain : you have to add the whole scene to your program.</p>
+</div>
+<div class="part">
+            <h2>Launch and update your ECS</h2>
+            <p>No worries ! It's easy : you'll just have to create your scene in dg_init, update it in dg_loop and destroy it in dg_end</p>
+
+            <pre><code class="lang-c line-numbers">typedef struct data {
+    dg_scene_t *scene; //add scene to the variables of the window
+} data_t;
+
+void *dg_init(dg_window_t *w)
+{
+    data_t *d = malloc(sizeof(data_t));
+
+    d->scene = scene_game_create("map.map"); //create the scene
+    return d;
+}
+
+int dg_loop(dg_window_t *w, void *data, sfTime dt)
+{
+    data_t *d = ((data_t *)(data));
+
+    sfRenderWindow_clear(w->window, sfBlack);
+    dg_scene_update(d->scene, w, dt); // update the scene
+    return 0;
+}
+
+void dg_end(void *data, int id)
+{
+    data_t *d = ((data_t *)(data));
+
+    dg_scene_destroy(d->scene); //destroy the scene
+}
+
+int main(int argc, char **argv)
+{
+    dg_play(screen_size, "LibDragon", 0); // launch the window
+    return 0;
+}</code></pre>
+    <p>Here's more info about dg_scene_update : <br />
+        the fisrt argument is your scene, the second is the dg_window and the last the timelapse (dt).<br />
+        Now you just have to let the magic of ECS doing his job !</p>
+</div>
+</section>
+    </body>
+</html>
+

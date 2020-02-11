@@ -150,6 +150,7 @@ void dg_end(void *var, int id)
 
     dg_scene_destroy(v->scene_game);
 }</code></pre>
+<p><a href="tutorial/ecs_the_whole_tutorial.html">Click here for more informations</a></p>
         </div>
         <div class="part">
             <h2>the Components</h2>
@@ -176,6 +177,7 @@ dg_component_t *dg_cpt_pos(int x, int y)
     component = dg_component_create("pos", pos, destroy);
     return component;
 }</code></pre>
+<p><a href="tutorial/ecs_the_whole_tutorial.html">Click here for more informations</a></p>
             </div>
         </div>
         <div class="part">
@@ -190,6 +192,7 @@ dg_component_t *dg_cpt_pos(int x, int y)
     dg_entity_add_component(entity, dg_cpt_pos(x, y));
     return entity;
 }</code></pre>
+<p><a href="tutorial/ecs_the_whole_tutorial.html">Click here for more informations</a></p>
             </div>
             <div class="part">
                 <h2>the Systems</h2>
@@ -208,6 +211,7 @@ dg_array_t **entities, sfTime dt)
     return;
     dg_animator_update_sprite(animator, sprite, dt.microseconds);
 }</code></pre>
+<p><a href="tutorial/ecs_the_whole_tutorial.html">Click here for more informations</a></p>
                 </div>
                 <div class="part">
                     <h2>the Scene</h2>
@@ -233,6 +237,7 @@ dg_array_t **entities, sfTime dt)
     dg_scene_add_sys(scene_game, dg_system_create(&system_display_text));
     return scene_game;
 }</code></pre>
+<p><a href="tutorial/ecs_the_whole_tutorial.html">Click here for more informations</a></p>
                     </div>
                     <div class="part">
                         <h2><a href="https://www.sfml-dev.org">CSFML</a></h2>
