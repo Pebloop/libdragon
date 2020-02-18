@@ -20,8 +20,9 @@
 #include "dg_entity.h"
 #include "dg_system.h"
 #include "dg_scene.h"
+#include "dg_scene_manager.h"
 #include "dg_cpt.h"
+#include "dg_ressources.h"
 
-int dg_play(unsigned int, unsigned int, char *, int);
-
+int dg_play(sfVector2u, char *, int, void *);
 #endif

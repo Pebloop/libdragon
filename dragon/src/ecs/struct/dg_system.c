@@ -9,7 +9,7 @@
 #include <stdarg.h>
 #include "dg_system.h"
 
-dg_system_t *dg_system_create(dg_sysf_t action)
+dg_system_t *dg_system_create(dg_sysf_t action, int is_render)
 {
     dg_system_t *system = 0;
 
@@ -19,6 +19,7 @@ dg_system_t *dg_system_create(dg_sysf_t action)
     if (!system)
         return 0;
     system->system = action;
+    system->is_render = is_render;
     return system;
 }
 

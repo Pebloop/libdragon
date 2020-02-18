@@ -1,5 +1,6 @@
 SRC	=	main.c		\
 		player.c	\
+		game_view.c \
 
 NAME	=	dragon.out
 
